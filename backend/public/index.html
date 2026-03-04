@@ -1754,6 +1754,76 @@
         grid-template-columns: 1fr 1fr
       }
     }
+
+    /* ── FOUNDER SECTION ── */
+    #founder {
+      padding: 100px 30px;
+      background: var(--dark3);
+      border-top: 1px solid rgba(184, 151, 42, 0.1);
+    }
+
+    .founder-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .founder-img {
+      flex: 0 0 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(184, 151, 42, 0.3);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .founder-img img {
+      width: 100%;
+      display: block;
+      filter: grayscale(15%);
+      transition: 0.4s;
+    }
+
+    .founder-img img:hover {
+      filter: grayscale(0%);
+    }
+
+    .founder-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      color: var(--gold-l);
+      margin-bottom: 5px;
+    }
+
+    .founder-content .f-title {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .founder-content p {
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 850px) {
+      .founder-wrap {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+      }
+
+      .founder-img {
+        max-width: 250px;
+        margin: 0 auto;
+      }
+    }
   </style>
 </head>
 
@@ -1761,7 +1831,7 @@
 
   <!-- Trust Bar -->
   <div class="trust-bar">ISO Certified &nbsp;|&nbsp; 100% Online — No Physical Visit Required &nbsp;|&nbsp; <a
-      href="tel:+919876543210">📞 +91 98765 43210</a> &nbsp;|&nbsp; Pan-India Service</div>
+      href="tel:+919830254434">📞 +91 98302 54434</a> &nbsp;|&nbsp; Pan-India Service</div>
 
   <!-- ══ LIVE STOCK TICKER ══════════════════════════════════════ -->
   <div class="ticker-outer" id="tickerOuter">
@@ -2816,6 +2886,26 @@
     </div>
   </section>
 
+  <!-- About Founder -->
+  <section id="founder">
+    <div class="founder-wrap">
+      <div class="founder-img">
+        <img src="founder.jpg" alt="Avijit Chowdhury">
+      </div>
+      <div class="founder-content">
+        <h2>Avijit Chowdhury</h2>
+        <span class="f-title">Founder &amp; CEO</span>
+        <p>Avijit Chowdhury is a Tax Consultant by profession and an entrepreneur by passion. He has wide industry
+          experience in Finance, retail, manufacturing, and entertainment and has handled various national assignments.
+        </p>
+        <p>Through Smritikana Business Solutions, Avijit endeavors to revolutionize how individuals file their income
+          tax returns and manage business compliance, offering a seamless and user-friendly experience. As the
+          co-founder and CEO, he leads Smritikana in providing the easiest way to manage your business legalities and
+          tax filings in India.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact -->
   <section id="contact">
     <div class="contact-wrap">
@@ -2827,8 +2917,8 @@
         <div class="cd">
           <div class="cd-icon">📞</div>
           <div class="cd-body">
-            <h4>Call Us</h4>
-            <p>+91 98765 43210 &nbsp;|&nbsp; +91 98765 43211</p>
+            <h4>Call / WhatsApp</h4>
+            <p>+91 98302 54434 &nbsp;|&nbsp; +91 94778 86322</p>
           </div>
         </div>
         <div class="cd">
@@ -2841,8 +2931,8 @@
         <div class="cd">
           <div class="cd-icon">📍</div>
           <div class="cd-body">
-            <h4>Serving Pan-India</h4>
-            <p>West Bengal · Delhi · UP · Maharashtra · Gujarat and all states</p>
+            <h4>Address</h4>
+            <p>Q85Q+58H, Chatra, Serampore,<br>West Bengal, India</p>
           </div>
         </div>
       </div>
@@ -2964,7 +3054,7 @@
 
   <!-- Floating CTA -->
   <div class="float-cta">
-    <a href="https://wa.me/919876543210" class="float-btn wa" target="_blank">💬 WhatsApp Us</a>
+    <a href="https://wa.me/919830254434" class="float-btn wa" target="_blank">💬 WhatsApp Us</a>
     <a href="#contact" class="float-btn primary">🎯 Free Consultation</a>
   </div>
   <div class="toast" id="toast"></div>
