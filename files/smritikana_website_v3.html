@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smritikana Business Solutions – Transforming Thoughts into Truthful Reality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#B8972A; --gold-l:#D4AF4C; --gold-pale:#F5EDD4;
+  --dark:#0F0F0D; --dark2:#1A1A16; --dark3:#252520; --mid:#3A3A33;
+  --txt:#E8E4D9; --muted:#9A9585; --white:#FAFAF5;
+  --green:#22c55e; --red:#ef4444; --accent:#C14B2A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--txt);overflow-x:hidden}
+
+/* ── TRUST BAR ── */
+.trust-bar{background:var(--gold);color:var(--dark);text-align:center;padding:7px 20px;font-size:11.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
+.trust-bar a{color:var(--dark);text-decoration:none}
+
+/* ══════════════════════════════════════════════════
+   LIVE STOCK TICKER
+══════════════════════════════════════════════════ */
+.ticker-outer{
+  position:relative;background:var(--dark3);
+  border-bottom:1px solid rgba(184,151,42,.2);
+  height:38px;display:flex;align-items:center;overflow:hidden
+}
+.ticker-badge{
+  background:var(--gold);color:var(--dark);
+  height:100%;padding:0 16px;display:flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  white-space:nowrap;flex-shrink:0;z-index:3
+}
+.live-dot-badge{
+  width:7px;height:7px;border-radius:50%;background:var(--dark);
+  box-shadow:0 0 0 2px rgba(0,0,0,.2);animation:blink 1.6s infinite
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.ticker-viewport{overflow:hidden;flex:1;position:relative}
+.ticker-track{
+  display:flex;align-items:center;white-space:nowrap;
+  animation:tickerMove 55s linear infinite
+}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.t-item{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:0 22px;font-size:12px;cursor:pointer;
+  border-right:1px solid rgba(184,151,42,.1);
+  transition:background .18s
+}
+.t-item:hover{background:rgba(184,151,42,.07)}
+.t-sym{color:var(--muted);font-weight:500;font-size:11.5px}
+.t-price{color:var(--white);font-weight:700}
+.t-chg{font-size:11px;font-weight:600}
+.t-chg.up{color:var(--green)}
+.t-chg.dn{color:var(--red)}
+
+.ticker-right{
+  position:absolute;right:0;top:0;height:100%;z-index:3;
+  background:linear-gradient(to right,transparent,var(--dark3) 28%);
+  padding:0 12px 0 42px;display:flex;align-items:center;gap:8px;
+  font-size:10.5px;color:var(--muted);pointer-events:none
+}
+.ticker-right .market-toggle{pointer-events:all;cursor:pointer;transition:color .2s}
+.ticker-right .market-toggle:hover{color:var(--gold-l)}
+.live-ind{
+  width:6px;height:6px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 7px var(--green);animation:blink 2s infinite;
+  pointer-events:all;cursor:pointer
+}
+.ticker-loading{display:flex;align-items:center;gap:10px;padding:0 20px;font-size:12px;color:var(--muted)}
+.spin{width:13px;height:13px;border:2px solid rgba(184,151,42,.25);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── MARKET PANEL ── */
+.market-panel{
+  display:none;background:var(--dark2);
+  border-bottom:1px solid rgba(184,151,42,.12);padding:18px 72px
+}
+.market-panel.open{display:block}
+.mp-tabs{display:flex;gap:4px;margin-bottom:14px}
+.mp-tab{
+  padding:5px 14px;border-radius:6px;font-size:10.5px;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  border:none;background:var(--dark3);color:var(--muted);transition:all .2s;
+  font-family:'DM Sans',sans-serif
+}
+.mp-tab.active,.mp-tab:hover{background:var(--gold);color:var(--dark)}
+.mp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.mp-card{
+  background:var(--dark3);border:1px solid rgba(255,255,255,.04);
+  border-radius:9px;padding:12px 14px;cursor:pointer;transition:border-color .2s
+}
+.mp-card:hover{border-color:rgba(184,151,42,.3)}
+.mp-card .mc-lbl{font-size:10.5px;color:var(--muted);margin-bottom:3px}
+.mp-card .mc-px{font-size:17px;font-weight:700;color:var(--white);line-height:1}
+.mp-card .mc-chg{font-size:10.5px;font-weight:600;margin-top:3px}
+.mc-chg.up{color:var(--green)} .mc-chg.dn{color:var(--red)}
+.mp-close{float:right;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;margin-top:-2px}
+.mp-close:hover{color:var(--txt)}
+.mp-footer{font-size:10px;color:var(--muted);margin-top:10px}
+
+/* ── LANGUAGE BAR ── */
+.lang-bar{background:var(--dark2);padding:7px 72px;display:flex;gap:5px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(255,255,255,.04)}
+.lang-bar span{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.lang-btn{padding:3px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.lang-btn:hover,.lang-btn.active{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+
+/* ── NAV ── */
+nav{background:var(--dark2);border-bottom:1px solid rgba(184,151,42,.2);position:sticky;top:0;z-index:1000;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:66px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--gold-l);text-decoration:none}
+.nav-logo span{display:block;font-size:9.5px;font-family:'DM Sans',sans-serif;color:var(--muted);letter-spacing:3px;text-transform:uppercase;font-weight:400}
+.nav-links{display:flex;gap:4px;list-style:none}
+.nav-links>li{position:relative}
+.nav-links>li>a{display:block;padding:8px 13px;font-size:12px;font-weight:500;letter-spacing:.5px;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;border-radius:4px}
+.nav-links>li>a:hover{color:var(--gold-l)}
+.dropdown{display:none;position:absolute;top:100%;left:0;background:var(--dark3);border:1px solid rgba(184,151,42,.2);border-radius:8px;min-width:250px;padding:8px 0;box-shadow:0 20px 60px rgba(0,0,0,.6);z-index:2000}
+.nav-links>li:hover .dropdown{display:block}
+.dropdown a{display:block;padding:8px 18px;font-size:12px;color:var(--muted);text-decoration:none;transition:background .15s,color .15s}
+.dropdown a:hover{background:rgba(184,151,42,.08);color:var(--gold-l)}
+.nav-cta{background:var(--gold)!important;color:var(--dark)!important;padding:8px 18px!important;border-radius:6px;font-weight:600!important}
+.nav-cta:hover{background:var(--gold-l)!important}
+
+/* ── HERO ── */
+.hero{min-height:91vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:80px;background:var(--dark)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 50%,rgba(184,151,42,.06) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 15% 80%,rgba(193,75,42,.05) 0%,transparent 60%)}
+.hero-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(var(--gold) 1px,transparent 1px),linear-gradient(90deg,var(--gold) 1px,transparent 1px);background-size:60px 60px}
+.hero-content{position:relative;z-index:2;max-width:660px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(184,151,42,.1);border:1px solid rgba(184,151,42,.3);border-radius:100px;padding:5px 15px;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-l);margin-bottom:26px;font-weight:500}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(46px,5.5vw,76px);font-weight:700;line-height:1.05;color:var(--white);margin-bottom:22px}
+.hero h1 em{font-style:italic;color:var(--gold-l);display:block}
+.hero p{font-size:15px;color:var(--muted);line-height:1.8;max-width:510px;margin-bottom:38px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:var(--dark);padding:13px 30px;border-radius:8px;font-weight:600;font-size:12.5px;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s;display:inline-block}
+.btn-primary:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 28px rgba(184,151,42,.3)}
+.btn-outline{background:transparent;color:var(--txt);padding:13px 30px;border-radius:8px;font-weight:500;font-size:12.5px;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.15);transition:all .25s;display:inline-block}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold-l)}
+.hero-stats{position:absolute;right:80px;bottom:80px;display:flex;gap:46px;z-index:2}
+.hero-stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;color:var(--gold-l);line-height:1}
+.hero-stat span{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+/* ── SECTIONS ── */
+section{padding:92px 80px}
+.sec-label{font-size:9.5px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,50px);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:14px}
+.sec-sub{font-size:14px;color:var(--muted);line-height:1.8;max-width:560px;margin-bottom:52px}
+.divider{width:44px;height:2px;background:var(--gold);margin:14px 0 46px}
+
+/* ── SERVICES ── */
+#services{background:var(--dark2)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(184,151,42,.1);border-radius:14px;overflow:hidden}
+.svc-card{background:var(--dark3);padding:34px 30px;text-decoration:none;display:block;transition:background .25s}
+.svc-card:hover{background:rgba(184,151,42,.07)}
+.svc-icon{width:42px;height:42px;border-radius:10px;background:rgba(184,151,42,.12);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:18px}
+.svc-card h3{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:9px}
+.svc-card p{font-size:12.5px;color:var(--muted);line-height:1.7}
+.svc-arrow{display:inline-block;color:var(--gold);font-size:17px;margin-top:14px;transition:transform .2s}
+.svc-card:hover .svc-arrow{transform:translateX(4px)}
+
+/* ── REGISTRATION ── */
+#registration{background:var(--dark)}
+.reg-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:44px;background:var(--dark2);padding:5px;border-radius:10px;width:fit-content;max-width:100%}
+.reg-tab{padding:8px 16px;border-radius:7px;font-size:11.5px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:transparent;transition:all .2s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.reg-tab.active,.reg-tab:hover{background:var(--gold);color:var(--dark)}
+.reg-panel{display:none}
+.reg-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.reg-content h3{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--white);margin-bottom:14px}
+.reg-content p{font-size:13.5px;color:var(--muted);line-height:1.8;margin-bottom:18px}
+.keynote{background:rgba(184,151,42,.07);border:1px solid rgba(184,151,42,.2);border-radius:9px;padding:18px 22px;margin-bottom:24px}
+.keynote-title{font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:600}
+.keynote ul{list-style:none}
+.keynote ul li{font-size:12.5px;color:var(--muted);padding:4px 0;display:flex;align-items:flex-start;gap:9px}
+.keynote ul li::before{content:'✓';color:var(--gold);flex-shrink:0;font-weight:700}
+.step{display:flex;gap:18px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.step:last-child{border-bottom:none}
+.step-num{width:30px;height:30px;border-radius:50%;background:rgba(184,151,42,.15);border:1px solid rgba(184,151,42,.3);display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:var(--gold);flex-shrink:0}
+.step-body h4{font-size:13.5px;font-weight:600;color:var(--white);margin-bottom:3px}
+.step-body p{font-size:12.5px;color:var(--muted);line-height:1.6}
+.doc-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.doc-item{background:var(--dark3);border:1px solid rgba(255,255,255,.06);border-radius:7px;padding:9px 13px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.doc-item::before{content:'📄';font-size:13px}
+
+/* ── TOOLS ── */
+#tools{background:var(--dark2)}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.tool-card{background:var(--dark3);border:1px solid rgba(184,151,42,.15);border-radius:14px;padding:38px}
+.tool-card h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--white);margin-bottom:6px}
+.tool-card>p{font-size:12.5px;color:var(--muted);margin-bottom:28px}
+.calc-row{margin-bottom:22px}
+.calc-label{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;justify-content:space-between}
+.calc-label strong{color:var(--gold-l)}
+.calc-range{width:100%;height:4px;-webkit-appearance:none;background:rgba(184,151,42,.2);border-radius:4px;outline:none;cursor:pointer}
+.calc-range::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--gold);cursor:pointer}
+.calc-result{background:rgba(184,151,42,.08);border:1px solid rgba(184,151,42,.2);border-radius:9px;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;margin-top:24px}
+.calc-result span{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.calc-result strong{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--gold-l)}
+.form-group{margin-bottom:14px}
+.form-group label{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:7px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--dark2);border:1px solid rgba(184,151,42,.15);border-radius:7px;padding:11px 15px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13.5px;outline:none;transition:border-color .2s}
+.form-group textarea{min-height:90px;resize:vertical}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group select option{background:var(--dark3)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-submit{width:100%;padding:13px;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase}
+
+/* ── COMPLIANCE ── */
+#compliance{background:var(--dark)}
+.comp-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
+.comp-col h3{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--gold-l);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(184,151,42,.2)}
+.comp-list{list-style:none}
+.comp-list li{padding:7px 0;font-size:12.5px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:color .2s;display:flex;align-items:center;gap:7px}
+.comp-list li::before{content:'→';color:var(--gold);font-size:11px;transition:transform .2s}
+.comp-list li:hover{color:var(--txt)}
+.comp-list li:hover::before{transform:translateX(3px)}
+
+/* ── LEGAL ── */
+#legal{background:var(--dark2)}
+.legal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.legal-card{background:var(--dark3);border:1px solid rgba(255,255,255,.05);border-radius:11px;padding:26px 22px;transition:border-color .25s;cursor:pointer}
+.legal-card:hover{border-color:rgba(184,151,42,.3)}
+.legal-card .lc-ico{font-size:26px;margin-bottom:14px}
+.legal-card h4{font-size:13.5px;font-weight:600;color:var(--white);margin-bottom:9px}
+.legal-card ul{list-style:none}
+.legal-card ul li{font-size:11.5px;color:var(--muted);padding:2.5px 0}
+
+/* ── TRUST ── */
+#trust{background:var(--dark)}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.trust-item{text-align:center;padding:34px 22px;border:1px solid rgba(184,151,42,.1);border-radius:11px;transition:border-color .25s,background .25s}
+.trust-item:hover{border-color:rgba(184,151,42,.3);background:rgba(184,151,42,.03)}
+.trust-item .ti-n{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:700;color:var(--gold-l);line-height:1;display:block}
+.trust-item .ti-l{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:7px;display:block}
+.trust-item .ti-d{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.6}
+
+/* ── CONTACT ── */
+#contact{background:var(--dark2)}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.contact-info h2{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;color:var(--white);margin-bottom:18px;line-height:1.1}
+.contact-info>p{font-size:13.5px;color:var(--muted);line-height:1.8;margin-bottom:32px}
+.cd{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px}
+.cd-icon{width:38px;height:38px;background:rgba(184,151,42,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.cd-body h4{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.cd-body p{font-size:13.5px;color:var(--txt)}
+.contact-form{background:var(--dark3);border:1px solid rgba(184,151,42,.15);border-radius:14px;padding:40px}
+.contact-form h3{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:700;color:var(--white);margin-bottom:7px}
+.contact-form>p{font-size:12.5px;color:var(--muted);margin-bottom:28px}
+.form-msg{padding:11px 15px;border-radius:7px;font-size:12.5px;margin-top:10px;display:none}
+.form-msg.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac;display:block}
+.form-msg.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5;display:block}
+
+/* ── FOOTER ── */
+footer{background:var(--dark3);padding:60px 80px 28px;border-top:1px solid rgba(184,151,42,.15)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:44px;margin-bottom:50px}
+.footer-brand p{font-size:12.5px;color:var(--muted);line-height:1.8;margin:14px 0 22px}
+.footer-col h4{font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:7px}
+.footer-col ul li a{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-col ul li a:hover{color:var(--gold-l)}
+.footer-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:flex-start;gap:22px}
+.disclaimer{font-size:10.5px;color:var(--muted);line-height:1.7;max-width:700px;opacity:.7}
+.footer-links{display:flex;gap:18px;flex-shrink:0}
+.footer-links a{font-size:10.5px;color:var(--muted);text-decoration:none}
+.footer-links a:hover{color:var(--gold-l)}
+
+/* ── FLOATING CTA ── */
+.float-cta{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;gap:9px;align-items:flex-end}
+.float-btn{padding:11px 18px;border-radius:50px;font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s;box-shadow:0 6px 22px rgba(0,0,0,.4);display:flex;align-items:center;gap:7px;font-family:'DM Sans',sans-serif}
+.float-btn.primary{background:var(--gold);color:var(--dark)}
+.float-btn.primary:hover{background:var(--gold-l);transform:translateY(-2px)}
+.float-btn.wa{background:#25D366;color:#fff}
+.float-btn.wa:hover{background:#1ebe5d;transform:translateY(-2px)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--dark3);border:1px solid rgba(184,151,42,.3);color:var(--txt);padding:10px 22px;border-radius:7px;font-size:12.5px;opacity:0;transition:all .3s;pointer-events:none;z-index:9999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  section{padding:68px 36px} nav{padding:0 22px}
+  .hero{padding:56px 36px} .hero-stats{right:36px;bottom:56px}
+  .svc-grid{grid-template-columns:1fr 1fr} .legal-grid{grid-template-columns:1fr 1fr}
+  .contact-wrap{grid-template-columns:1fr;gap:36px}
+  .lang-bar,.market-panel{padding-left:36px;padding-right:36px}
+  footer{padding:56px 36px 24px} .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hero-stats{position:static;flex-direction:row;justify-content:flex-start;margin-top:44px}
+  .tools-grid,.comp-cols,.trust-grid{grid-template-columns:1fr}
+  .reg-panel.active{grid-template-columns:1fr}
+  .svc-grid,.legal-grid{grid-template-columns:1fr}
+  section{padding:52px 22px} footer{padding:44px 22px 20px}
+  .footer-top{grid-template-columns:1fr;gap:28px}
+  .footer-bottom{flex-direction:column}
+  .lang-bar{padding:9px 22px} .market-panel{padding:14px 22px}
+  .mp-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Trust Bar -->
+<div class="trust-bar">ISO Certified &nbsp;|&nbsp; 100% Online — No Physical Visit Required &nbsp;|&nbsp; <a href="tel:+91XXXXXXXXXX">📞 +91-XXXX-XXXXXX</a> &nbsp;|&nbsp; Pan-India Service</div>
+
+<!-- ══ LIVE STOCK TICKER ══════════════════════════════════════ -->
+<div class="ticker-outer" id="tickerOuter">
+  <div class="ticker-badge">
+    <div class="live-dot-badge"></div>
+    📈 LIVE MARKETS
+  </div>
+  <div class="ticker-viewport">
+    <div id="tickerInner">
+      <div class="ticker-loading"><div class="spin"></div><span>Loading live market data…</span></div>
+    </div>
+  </div>
+  <div class="ticker-right">
+    <div class="live-ind" id="liveDot" title="Click to expand" onclick="toggleMarketPanel()"></div>
+    <span class="market-toggle" id="mktTime" onclick="toggleMarketPanel()">Markets ▾</span>
+  </div>
+</div>
+
+<!-- Market Detail Panel -->
+<div class="market-panel" id="marketPanel">
+  <button class="mp-close" onclick="toggleMarketPanel()">✕</button>
+  <div class="mp-tabs">
+    <button class="mp-tab active" onclick="filterPanel('all',this)">All</button>
+    <button class="mp-tab" onclick="filterPanel('indices',this)">Indices</button>
+    <button class="mp-tab" onclick="filterPanel('india',this)">NSE Stocks</button>
+    <button class="mp-tab" onclick="filterPanel('crypto',this)">Crypto</button>
+  </div>
+  <div class="mp-grid" id="mpGrid"></div>
+  <p class="mp-footer" id="mpFooter"></p>
+</div>
+
+<!-- Language Bar -->
+<div class="lang-bar">
+  <span>Language:</span>
+  <button class="lang-btn active">English</button>
+  <button class="lang-btn">বাংলা</button>
+  <button class="lang-btn">हिंदी</button>
+  <button class="lang-btn">ગુજરાતિ</button>
+  <button class="lang-btn">ಕನ್ನಡ</button>
+  <button class="lang-btn">മലയാളം</button>
+  <button class="lang-btn">मराठी</button>
+  <button class="lang-btn">ਪੰਜਾਬੀ</button>
+  <button class="lang-btn">தமிழ்</button>
+  <button class="lang-btn">తెలుగు</button>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">Smritikana<span>Business Solutions</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services ▾</a>
+      <div class="dropdown">
+        <a href="#registration">Company Registration</a>
+        <a href="#compliance">Tax &amp; Compliance</a>
+        <a href="#legal">Legal Solutions</a>
+        <a href="#registration">Business Alteration</a>
+        <a href="#registration">GST Services</a>
+        <a href="#registration">Intellectual Property</a>
+      </div>
+    </li>
+    <li><a href="#registration">Registration ▾</a>
+      <div class="dropdown">
+        <a href="#registration" onclick="showTab('pvt',null)">Private Limited Company</a>
+        <a href="#registration" onclick="showTab('llp',null)">LLP Registration</a>
+        <a href="#registration" onclick="showTab('opc',null)">OPC Registration</a>
+        <a href="#registration" onclick="showTab('nidhi',null)">Nidhi Company</a>
+        <a href="#registration" onclick="showTab('mf',null)">Microfinance Company</a>
+        <a href="#registration" onclick="showTab('nbfc',null)">NBFC Registration</a>
+        <a href="#registration" onclick="showTab('prod',null)">Producer Company</a>
+        <a href="#registration" onclick="showTab('s8',null)">Section 8 (NGO)</a>
+        <a href="#registration" onclick="showTab('soc',null)">Society</a>
+        <a href="#registration" onclick="showTab('trust',null)">Trust</a>
+        <a href="#registration" onclick="showTab('pub',null)">Public Limited</a>
+      </div>
+    </li>
+    <li><a href="#tools">Tools ▾</a>
+      <div class="dropdown">
+        <a href="#tools">EMI Calculator</a>
+        <a href="#tools">CIBIL Eligibility Checker</a>
+      </div>
+    </li>
+    <li><a href="#compliance">Compliance</a></li>
+    <li><a href="#legal">Legal</a></li>
+    <li><a href="#contact" class="nav-cta">Free Consultation</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div><div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">One Window Solution · Pan-India</div>
+    <h1>Transforming Thoughts<em>into Truthful Reality.</em></h1>
+    <p>Your trusted partner for company registration, tax compliance, and legal services — expert precision, complete confidentiality, fastest turnaround across India.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Get Free Consultation</a>
+      <a href="#registration" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>5000+</strong><span>Happy Clients</span></div>
+    <div class="hero-stat"><strong>12+</strong><span>Years Active</span></div>
+    <div class="hero-stat"><strong>15</strong><span>Day Turnaround</span></div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <div class="sec-label">What We Do</div>
+  <div class="sec-title">Complete Business Solutions</div>
+  <div class="divider"></div>
+  <div class="svc-grid">
+    <a href="#registration" class="svc-card"><div class="svc-icon">🏛️</div><h3>Company Registration</h3><p>Private Ltd, LLP, OPC, Nidhi, Microfinance, NBFC, Producer, Society, Trust and more.</p><span class="svc-arrow">→</span></a>
+    <a href="#compliance" class="svc-card"><div class="svc-icon">📊</div><h3>Tax &amp; Compliance</h3><p>Annual filings, GST, ITR, PF, ESI, Professional Tax — complete post-incorporation management.</p><span class="svc-arrow">→</span></a>
+    <a href="#legal" class="svc-card"><div class="svc-icon">⚖️</div><h3>Legal Solutions</h3><p>Legal counsel, agreements, notices, property services, trademark &amp; IP registration.</p><span class="svc-arrow">→</span></a>
+    <a href="#tools" class="svc-card"><div class="svc-icon">📈</div><h3>Live Markets &amp; Tools</h3><p>Real-time NSE/BSE stocks, NIFTY, SENSEX, Crypto ticker — plus EMI Calculator &amp; CIBIL Checker.</p><span class="svc-arrow">→</span></a>
+    <a href="#compliance" class="svc-card"><div class="svc-icon">🔄</div><h3>Business Alteration</h3><p>Director changes, name/address changes, capital restructuring, winding-up services.</p><span class="svc-arrow">→</span></a>
+    <a href="#legal" class="svc-card"><div class="svc-icon">™️</div><h3>Intellectual Property</h3><p>Trademark, logo, copyright &amp; patent registration — protect your brand with IPR experts.</p><span class="svc-arrow">→</span></a>
+  </div>
+</section>
+
+<!-- Registration Hub -->
+<section id="registration">
+  <div class="sec-label">Inception Hub</div>
+  <div class="sec-title">Company Registration Services</div>
+  <div class="sec-sub">Select an entity type to explore the process, documents, and key details.</div>
+  <div class="reg-tabs">
+    <button class="reg-tab active" onclick="showTab('pvt',this)">Private Ltd</button>
+    <button class="reg-tab" onclick="showTab('llp',this)">LLP</button>
+    <button class="reg-tab" onclick="showTab('opc',this)">OPC</button>
+    <button class="reg-tab" onclick="showTab('nidhi',this)">Nidhi Co.</button>
+    <button class="reg-tab" onclick="showTab('mf',this)">Microfinance</button>
+    <button class="reg-tab" onclick="showTab('nbfc',this)">NBFC</button>
+    <button class="reg-tab" onclick="showTab('prod',this)">Producer Co.</button>
+    <button class="reg-tab" onclick="showTab('s8',this)">Section 8</button>
+    <button class="reg-tab" onclick="showTab('soc',this)">Society</button>
+    <button class="reg-tab" onclick="showTab('trust',this)">Trust</button>
+    <button class="reg-tab" onclick="showTab('pub',this)">Public Ltd</button>
+  </div>
+  <div id="regPanels">
+    <!-- ── Private Limited ── -->
+    <div id="tab-pvt" class="reg-panel active">
+      <div class="reg-content">
+        <h3>Private Limited Company</h3>
+        <p>Most popular choice for startups and growing businesses. Offers limited liability, separate legal identity, and strong investor appeal under the Companies Act, 2013.</p>
+        <div class="keynote"><div class="keynote-title">Key Notes</div><ul>
+          <li>Registration in 10–15 working days</li><li>100% online — no physical visit required</li>
+          <li>No minimum share capital</li><li>At least 2 directors &amp; 2 shareholders</li>
+        </ul></div>
+        <div class="doc-list"><div class="doc-item">PAN Card</div><div class="doc-item">Aadhaar / Voter ID</div><div class="doc-item">Passport Photo</div><div class="doc-item">Utility Bill</div><div class="doc-item">NOC from Landlord</div><div class="doc-item">Rent Agreement</div></div><br>
+        <a href="#contact" class="btn-primary">Register Now</a>
+      </div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Obtain DSC &amp; DIN</h4><p>Digital Signature Certificates and Director Identification Numbers for all proposed directors.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Name Approval via RUN</h4><p>Two unique name options filed with MCA for approval within 2–3 working days.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Draft MOA &amp; AOA</h4><p>Memorandum and Articles of Association drafted with all director declarations.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>File SPICe Form to ROC</h4><p>Complete incorporation application submitted to the Registrar of Companies.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Certificate of Incorporation</h4><p>COI issued with PAN and TAN automatically generated and sent via email.</p></div></div>
+      </div>
+    </div>
+    <!-- ── LLP ── -->
+    <div id="tab-llp" class="reg-panel">
+      <div class="reg-content"><h3>LLP Registration</h3><p>Combines benefits of a company and partnership. Ideal for professional service providers under the LLP Act, 2008.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 10–15 working days</li><li>No minimum capital requirement</li><li>No audit required below ₹40L turnover</li><li>Minimum 2 designated partners</li></ul></div>
+      <div class="doc-list"><div class="doc-item">PAN Card</div><div class="doc-item">Voter ID / Passport</div><div class="doc-item">Passport Photo</div><div class="doc-item">Bank Statement</div><div class="doc-item">Office Utility Bill</div><div class="doc-item">NOC / Rent Agreement</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>DSC for Partners</h4><p>Digital Signature Certificates for all designated partners.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Name Approval via LLP-RUN</h4><p>Reserve unique name through the MCA portal.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>File e-Form FiLLiP</h4><p>Incorporation application with partner details and documents.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>LLP Agreement (Form 3)</h4><p>Notarized LLP agreement filed within 30 days of incorporation.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>PAN Application</h4><p>PAN applied once certificate of registration is received.</p></div></div>
+      </div>
+    </div>
+    <!-- ── OPC ── -->
+    <div id="tab-opc" class="reg-panel">
+      <div class="reg-content"><h3>One Person Company (OPC)</h3><p>Upgrade from sole proprietorship — gives a single entrepreneur all benefits of a Private Limited Company with full liability protection.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 10–15 working days</li><li>Only Indian resident citizens eligible</li><li>No minimum capital; max ₹50L</li><li>One director &amp; one nominee required</li></ul></div>
+      <div class="doc-list"><div class="doc-item">PAN Card</div><div class="doc-item">Aadhaar / Voter ID</div><div class="doc-item">2 Colour Photographs</div><div class="doc-item">Address Proof</div><div class="doc-item">NOC from Owner</div><div class="doc-item">Utility Bill</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Obtain DSC</h4><p>Digital signature for the single director/shareholder.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Name Approval (RUN)</h4><p>Unique company name filed online with two options.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Draft MOA &amp; AOA</h4><p>All declarations including nominee consent documented.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>File SPICe Form to ROC</h4><p>Incorporation application submitted with all attachments.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Certificate of Incorporation</h4><p>COI issued with PAN and TAN automatically generated.</p></div></div>
+      </div>
+    </div>
+    <!-- ── Nidhi ── -->
+    <div id="tab-nidhi" class="reg-panel">
+      <div class="reg-content"><h3>Nidhi Company Registration</h3><p>Promotes saving and thrift among members, offering loans at lower rates. Operates without RBI approval under Companies Act 2013.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 10–15 days</li><li>Minimum paid-up capital: ₹10 Lakh</li><li>3 directors and 7 members at registration</li><li>Must reach 200 members within 120 days</li></ul></div>
+      <div class="doc-list"><div class="doc-item">PAN Card</div><div class="doc-item">DL / Voter ID / Passport</div><div class="doc-item">Bank Statement (2 months)</div><div class="doc-item">Passport Photo</div><div class="doc-item">Utility Bill (Office)</div><div class="doc-item">NOC / Rent Agreement</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>KYC &amp; DSC of Directors</h4><p>DIN from MCA and Digital Signatures for all directors.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Name Approval (RUN)</h4><p>Unique name with "Nidhi Limited" suffix reserved via MCA.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Documentation</h4><p>MOA, AOA, declaration sheets and subscription sheets drafted.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Incorporation via SPICe</h4><p>COI issued with PAN and TAN.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>File NDH-4</h4><p>Declaration as Nidhi Company filed within 120 days.</p></div></div>
+      </div>
+    </div>
+    <!-- ── Microfinance ── -->
+    <div id="tab-mf" class="reg-panel">
+      <div class="reg-content"><h3>Microfinance Company</h3><p>Provides small loans (under ₹50,000) to households and small businesses without banking access. Interest rate capped at 26% per annum.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 10–15 working days</li><li>Interest rate capped at 26% p.a.</li><li>Cannot accept public deposits</li><li>Encourages financial self-sufficiency</li></ul></div>
+      <div class="doc-list"><div class="doc-item">PAN Card</div><div class="doc-item">Aadhaar Card</div><div class="doc-item">Passport Photo</div><div class="doc-item">Address Proof</div><div class="doc-item">Office Utility Bill</div><div class="doc-item">NOC</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Company Registration</h4><p>Incorporate as Pvt/Public Ltd with initial capital of ₹1,00,000.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Raise Capital</h4><p>Increase paid-up capital to ₹5 Crore or ₹2 Crore (equity shares only).</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Bank Account &amp; FD</h4><p>Deposit capital as Fixed Deposit; obtain Certificate of No Lien from bank.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>File Online with RBI</h4><p>Application filed; Company Application Reference Number received.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Hard Copy to RBI</h4><p>Physical submission for due diligence. Certificate of Commencement on approval.</p></div></div>
+      </div>
+    </div>
+    <!-- ── NBFC ── -->
+    <div id="tab-nbfc" class="reg-panel">
+      <div class="reg-content"><h3>NBFC Registration</h3><p>Non-Banking Financial Companies offer loans, asset financing, investments — without a banking licence. RBI-regulated with significant operational advantages.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>RBI approval takes 90–120 days</li><li>Minimum Net Owned Fund: ₹2 Crore</li><li>100% FDI allowed</li><li>Up to 1000 branches without RBI approval</li></ul></div>
+      <div class="doc-list"><div class="doc-item">Certificate of Incorporation</div><div class="doc-item">MOA &amp; AOA</div><div class="doc-item">KYC &amp; Income Proof</div><div class="doc-item">Net Worth Certificate</div><div class="doc-item">Clean Banker Report</div><div class="doc-item">Director Experience Proof</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Company Registration</h4><p>Register with ₹2.5 Crore authorised capital. Appoint RBI-experienced auditor.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Board &amp; Business Plan</h4><p>Form Board of Directors and develop detailed 5-year business plan.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Capital Deposit</h4><p>Set up ₹2 Crore Fixed Deposit for RBI Net Owned Fund requirements.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Online Application to RBI</h4><p>File online and submit physical copy to regional RBI office.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>RBI Decision</h4><p>Decision within 90–120 days. Commencement filed within 6 months of licence.</p></div></div>
+      </div>
+    </div>
+    <!-- ── Producer ── -->
+    <div id="tab-prod" class="reg-panel">
+      <div class="reg-content"><h3>Producer Company</h3><p>Designed for farmers and primary producers. Blends cooperative society benefits with corporate structure. NABARD provides financial assistance.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 20–25 working days</li><li>Minimum paid-up capital: ₹5 Lakh</li><li>Complete Income Tax exemption available</li><li>Minimum 10 members required</li></ul></div>
+      <div class="doc-list"><div class="doc-item">PAN Card &amp; Photo</div><div class="doc-item">Voter ID / Passport</div><div class="doc-item">Producer Proof (Khasra)</div><div class="doc-item">Rent Agreement</div><div class="doc-item">Office Utility Bill</div><div class="doc-item">NOC from Owner</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Obtain DSC</h4><p>Digital Signature Certificates for all proposed directors.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Name Approval (RUN)</h4><p>File name with registrar of companies; approval within 20 days.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Documentation</h4><p>Directors' declarations, MOA, AOA, subscription sheets prepared.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>File SPICE e-Form with ROC</h4><p>Certificate of Incorporation issued within 7 days of submission.</p></div></div>
+      </div>
+    </div>
+    <!-- ── Section 8 ── -->
+    <div id="tab-s8" class="reg-panel">
+      <div class="reg-content"><h3>Section 8 Company (NGO/NPO)</h3><p>Most credible form of NGO under Companies Act 2013. Promotes social welfare, education, arts, science — with significant tax benefits and nationwide authority.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 10–15 working days</li><li>No minimum share capital required</li><li>Exempt from stamp duty on MOA &amp; AOA</li><li>Tax exemption under 12AA &amp; 80G</li></ul></div>
+      <div class="doc-list"><div class="doc-item">PAN Card</div><div class="doc-item">Voter ID / Passport</div><div class="doc-item">Bank Statement / Utility Bill</div><div class="doc-item">Passport Photo</div><div class="doc-item">NOC from Owner</div><div class="doc-item">Office Utility Bill</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Obtain DSC</h4><p>Digital Signatures for all proposed directors.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Name Approval</h4><p>Name must include: foundation, society, association, federation, etc.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Central Govt. Licence (INC-12)</h4><p>Apply to Regional Director, MCA — granted within ~15 days.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>File Incorporation with ROC</h4><p>Certificate of Incorporation with CIN issued.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><h4>PAN, TAN &amp; Bank Account</h4><p>Obtain PAN, TAN and open bank account to commence operations.</p></div></div>
+      </div>
+    </div>
+    <!-- ── Society ── -->
+    <div id="tab-soc" class="reg-panel">
+      <div class="reg-content"><h3>Society Registration</h3><p>Registered under the Societies Registration Act, 1860 for literary, scientific, or charitable purposes. Minimum 7 members required.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 10–15 working days</li><li>No minimum capital requirement</li><li>Minimum 7 members required</li><li>100% online service</li></ul></div>
+      <div class="doc-list"><div class="doc-item">MOA</div><div class="doc-item">Rules &amp; Regulations</div><div class="doc-item">Member ID &amp; Address Proof</div><div class="doc-item">Office Bearers' Affidavit</div><div class="doc-item">NOC / Office Proof</div><div class="doc-item">Cover Letter</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Finalise Society Name</h4><p>Must be unique, not violate trademark or government regulations.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Draft Memorandum of Association</h4><p>Includes name, objectives, governing body details and registered office.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Prepare Rules &amp; Regulations</h4><p>Membership, elections, meetings, auditors and dispute resolution clauses.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>File with State Registrar</h4><p>Submit 2 copies to the state authority with requisite fees.</p></div></div>
+      </div>
+    </div>
+    <!-- ── Trust ── -->
+    <div id="tab-trust" class="reg-panel">
+      <div class="reg-content"><h3>Trust Registration</h3><p>Governed by the Indian Trusts Act, 1882. Public Charitable Trusts widely used to establish schools, hospitals, old-age homes and philanthropic institutions.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 10–15 working days</li><li>No minimum capital requirement</li><li>Minimum 2 trustees required</li><li>100% online service</li></ul></div>
+      <div class="doc-list"><div class="doc-item">Trust Deed (Notarized)</div><div class="doc-item">MOA &amp; Rules</div><div class="doc-item">KYC of Trustees</div><div class="doc-item">Affidavits</div><div class="doc-item">Registered Office Proof</div><div class="doc-item">ID Proof All Members</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Select Trust Name</h4><p>Must not suggest government patronage; comply with Emblems and Names Act, 1950.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Determine Author &amp; Trustees</h4><p>At least 2 trustees required.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Draft Trust Deed</h4><p>Comprehensive deed with settler, trustee, beneficiary, objectives, bylaws clauses.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Submit to Registrar</h4><p>Trust deed on stamp paper with 2 witnesses and settler present.</p></div></div>
+      </div>
+    </div>
+    <!-- ── Public Ltd ── -->
+    <div id="tab-pub" class="reg-panel">
+      <div class="reg-content"><h3>Public Limited Company</h3><p>Can raise capital from the public through IPO and stock exchange listing. Ideal for large enterprises seeking significant funding and market credibility.</p>
+      <div class="keynote"><div class="keynote-title">Key Notes</div><ul><li>Registration in 10–15 working days</li><li>Minimum paid-up capital: ₹5 Lakh</li><li>Minimum 7 shareholders and 3 directors</li><li>SEBI approval for 500+ members</li></ul></div>
+      <div class="doc-list"><div class="doc-item">PAN Card</div><div class="doc-item">Voter ID / Passport</div><div class="doc-item">Bank Statement</div><div class="doc-item">Passport Photo</div><div class="doc-item">Property Papers / Rent Agreement</div><div class="doc-item">NOC from Landlord</div></div><br>
+      <a href="#contact" class="btn-primary">Register Now</a></div>
+      <div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><h4>DSC &amp; Name Approval</h4><p>Digital Signatures for all 7+ shareholders. Name approved via RUN form.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Draft MOA &amp; AOA</h4><p>Memorandum with main object clause and Articles of Association prepared.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><h4>File SPICe e-Form with ROC</h4><p>Incorporation application with MOA, AOA, INC-9, DIR-2 and INC-10.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Certificate of Incorporation</h4><p>COI issued by ROC with CIN. PAN and TAN on incorporation certificate.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tools -->
+<section id="tools">
+  <div class="sec-label">Utility Hub</div>
+  <div class="sec-title">Financial Planning Tools</div>
+  <div class="sec-sub">Plan your business finances before you begin — live markets plus built-in calculators.</div>
+  <div class="tools-grid">
+    <div class="tool-card">
+      <h3>📐 EMI Calculator</h3>
+      <p>Plan your business loan repayments. Adjust principal, interest, and tenure to find your ideal EMI.</p>
+      <div class="calc-row"><div class="calc-label">Loan Amount <strong id="lAmt">₹10,00,000</strong></div><input type="range" class="calc-range" id="lR" min="100000" max="10000000" step="100000" value="1000000" oninput="calcEMI()"></div>
+      <div class="calc-row"><div class="calc-label">Interest Rate <strong id="rAmt">12%</strong> p.a.</div><input type="range" class="calc-range" id="rR" min="6" max="24" step="0.5" value="12" oninput="calcEMI()"></div>
+      <div class="calc-row"><div class="calc-label">Tenure <strong id="tAmt">24 months</strong></div><input type="range" class="calc-range" id="tR" min="6" max="84" step="6" value="24" oninput="calcEMI()"></div>
+      <div class="calc-result"><span>Monthly EMI</span><strong id="emiOut">₹47,073</strong></div>
+    </div>
+    <div class="tool-card">
+      <h3>🔍 CIBIL Eligibility Check</h3>
+      <p>A consultant will assess your credit eligibility and call you with a full loan guidance report.</p>
+      <div class="form-group"><label>Full Name</label><input type="text" id="cName" placeholder="Your full name"></div>
+      <div class="form-group"><label>Mobile Number</label><input type="tel" id="cMobile" placeholder="+91 XXXXX XXXXX"></div>
+      <div class="form-group"><label>Loan Purpose</label>
+        <select id="cPurpose">
+          <option>Business Loan</option><option>Working Capital</option>
+          <option>Equipment Finance</option><option>MSME Loan</option><option>Startup Funding</option>
+        </select>
+      </div>
+      <button class="btn-primary form-submit" onclick="submitCibil(event)">Check Eligibility</button>
+      <div id="cMsg" class="form-msg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Compliance -->
+<section id="compliance">
+  <div class="sec-label">Compliance Guard</div>
+  <div class="sec-title">Tax &amp; Annual Compliance</div>
+  <div class="sec-sub">Protect your business from penalties with complete compliance management.</div>
+  <div class="comp-cols">
+    <div class="comp-col"><h3>Annual Compliance</h3>
+      <ul class="comp-list">
+        <li>Tax &amp; Compliance — Private Limited Company</li><li>Tax &amp; Compliance — Public Limited Company</li>
+        <li>Tax &amp; Compliance — Nidhi Company</li><li>Tax &amp; Compliance — Microfinance Company</li>
+        <li>Tax &amp; Compliance — Producer Company</li><li>Tax &amp; Compliance — Section 8 Company</li>
+        <li>Tax &amp; Compliance — Society / Trust / LLP / OPC / NBFC</li>
+        <li>ITR Filing — Proprietorship &amp; Partnership Firm</li>
+      </ul>
+    </div>
+    <div class="comp-col"><h3>GST &amp; Registrations</h3>
+      <ul class="comp-list">
+        <li>GST Registration, Returns &amp; Compliance</li><li>Income Tax Return (All Entities)</li>
+        <li>Income Tax Assessment &amp; Appeal Cases</li><li>Provident Fund &amp; ESI Registration</li>
+        <li>Professional Tax Registration</li><li>FSSAI / ISO / MSME Registration</li>
+        <li>Startup India Registration</li><li>Import Export Code / Barcode</li>
+        <li>Shop &amp; Establishment Registration</li><li>Digital Signature Certificate (DSC)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="comp-cols">
+    <div class="comp-col"><h3>Business Alteration</h3>
+      <ul class="comp-list">
+        <li>Appointment / Resignation of Director</li><li>Foreign Director Appointment / Resignation</li>
+        <li>Company Name / Address / Object Change</li><li>Authorised Share Capital Change</li>
+      </ul>
+    </div>
+    <div class="comp-col"><h3>Conversion &amp; Winding Up</h3>
+      <ul class="comp-list">
+        <li>Proprietorship → Pvt Ltd / Partnership / LLP / OPC</li>
+        <li>Partnership → Private Limited Company</li>
+        <li>Private Limited → Public Limited / LLP</li>
+        <li>LLP / OPC → Private Limited Company</li>
+        <li>Strike Off — Pvt Ltd / Public Ltd / Nidhi / LLP / OPC</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Legal -->
+<section id="legal">
+  <div class="sec-label">Legal Vault</div>
+  <div class="sec-title">Legal Solutions</div>
+  <div class="sec-sub">Expert legal counsel, documentation, and IPR protection — all under one roof.</div>
+  <div class="legal-grid">
+    <div class="legal-card"><div class="lc-ico">⚖️</div><h4>Legal Advice</h4><ul><li>Civil Matters</li><li>Criminal Complaints</li><li>Online Transaction Disputes</li><li>Divorce Matters</li><li>Police Cases (FIR / GD)</li><li>Consumer &amp; RERA Complaints</li></ul></div>
+    <div class="legal-card"><div class="lc-ico">📝</div><h4>Agreements &amp; Contracts</h4><ul><li>Rent / Lease Agreement</li><li>Leave &amp; License</li><li>Joint Venture Deed</li><li>Partnership Deed</li><li>Employment Contract</li><li>Founders Agreement</li><li>NDA / Share Purchase Agreement</li></ul></div>
+    <div class="legal-card"><div class="lc-ico">🏠</div><h4>Property &amp; Succession</h4><ul><li>Title Verification</li><li>Property Searching</li><li>Sale Deed / Gift Deed</li><li>Will Probate</li><li>Succession Certificate</li><li>Legal Heir Certificate</li><li>Affidavits &amp; Notary</li></ul></div>
+    <div class="legal-card"><div class="lc-ico">™️</div><h4>Intellectual Property</h4><ul><li>Trademark Registration</li><li>Trademark Objection &amp; Renewal</li><li>Logo Registration</li><li>Copyright Registration</li><li>Patent Registration</li><li>Barcode Registration</li></ul></div>
+  </div>
+</section>
+
+<!-- Trust Factors -->
+<section id="trust">
+  <div class="sec-label">Why Choose Us</div>
+  <div class="sec-title">Our Commitment to You</div>
+  <div class="divider"></div>
+  <div class="trust-grid">
+    <div class="trust-item"><span class="ti-n">15</span><span class="ti-l">Day Registration</span><p class="ti-d">Guaranteed fastest turnaround for company registration across India.</p></div>
+    <div class="trust-item"><span class="ti-n">100%</span><span class="ti-l">Online Process</span><p class="ti-d">Every step handled digitally — no physical presence required at any stage.</p></div>
+    <div class="trust-item"><span class="ti-n">₹</span><span class="ti-l">Best Price India</span><p class="ti-d">Transparent, affordable fees — most competitive pricing nationwide.</p></div>
+    <div class="trust-item"><span class="ti-n">🔒</span><span class="ti-l">Data Security</span><p class="ti-d">100% confidentiality for all your documents and business information.</p></div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <div class="sec-label">Get in Touch</div>
+      <h2>Start Your Business Journey Today</h2>
+      <p>Book a free consultation with our experts. We'll guide you through the right structure for your business and ensure a smooth, compliant incorporation.</p>
+      <div class="cd"><div class="cd-icon">📞</div><div class="cd-body"><h4>Call Us</h4><p>+91 XXXX-XXXXXX &nbsp;|&nbsp; +91 XXXX-XXXXXX</p></div></div>
+      <div class="cd"><div class="cd-icon">✉️</div><div class="cd-body"><h4>Email</h4><p>info@smritikanabusiness.in</p></div></div>
+      <div class="cd"><div class="cd-icon">📍</div><div class="cd-body"><h4>Serving Pan-India</h4><p>West Bengal · Delhi · UP · Maharashtra · Gujarat and all states</p></div></div>
+    </div>
+    <div class="contact-form">
+      <h3>Free Consultation Request</h3>
+      <p>Fill in your details and we'll get back to you within 24 hours.</p>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" id="lName" placeholder="Your name"></div>
+        <div class="form-group"><label>Mobile Number</label><input type="tel" id="lMobile" placeholder="+91 XXXXX XXXXX"></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="lEmail" placeholder="your@email.com"></div>
+      <div class="form-group"><label>Service Required</label>
+        <select id="lService">
+          <option>Private Limited Company Registration</option><option>LLP Registration</option>
+          <option>OPC Registration</option><option>Nidhi Company Registration</option>
+          <option>Microfinance Company Registration</option><option>NBFC Registration</option>
+          <option>Producer Company Registration</option><option>Section 8 Company (NGO/NPO)</option>
+          <option>Society Registration</option><option>Trust Registration</option>
+          <option>Public Limited Company Registration</option><option>GST Registration / Return</option>
+          <option>Income Tax Return</option><option>Trademark Registration</option>
+          <option>Legal Services</option><option>Other / Not Sure</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message (Optional)</label><textarea id="lMessage" placeholder="Tell us briefly about your requirements…"></textarea></div>
+      <button class="btn-primary form-submit" onclick="submitLead(event)">Request Free Consultation →</button>
+      <div id="lMsg" class="form-msg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:#D4AF4C">Smritikana<span style="display:block;font-size:9.5px;font-family:'DM Sans',sans-serif;color:#9A9585;letter-spacing:3px;text-transform:uppercase;font-weight:400">Business Solutions</span></div>
+      <p>Your trusted One-Window Solution for company registration, tax compliance, and legal services across India. Transforming your business ideas into reality — with speed, accuracy, and care.</p>
+    </div>
+    <div class="footer-col"><h4>Registration</h4><ul>
+      <li><a href="#registration">Private Limited</a></li><li><a href="#registration">Public Limited</a></li>
+      <li><a href="#registration">LLP</a></li><li><a href="#registration">OPC</a></li>
+      <li><a href="#registration">Nidhi Company</a></li><li><a href="#registration">Microfinance</a></li>
+      <li><a href="#registration">NBFC</a></li><li><a href="#registration">Section 8 / NGO</a></li>
+      <li><a href="#registration">Society</a></li><li><a href="#registration">Trust</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Compliance</h4><ul>
+      <li><a href="#compliance">Annual Compliance</a></li><li><a href="#compliance">GST Registration</a></li>
+      <li><a href="#compliance">ITR Filing</a></li><li><a href="#compliance">PF Registration</a></li>
+      <li><a href="#compliance">MSME Registration</a></li><li><a href="#compliance">FSSAI Registration</a></li>
+      <li><a href="#compliance">Startup India</a></li><li><a href="#compliance">Digital Signature</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Legal</h4><ul>
+      <li><a href="#legal">Legal Advice</a></li><li><a href="#legal">Rent Agreement</a></li>
+      <li><a href="#legal">NDA / Contracts</a></li><li><a href="#legal">Property Services</a></li>
+      <li><a href="#legal">Trademark</a></li><li><a href="#legal">Copyright</a></li>
+      <li><a href="#legal">Patent</a></li><li><a href="#legal">Consumer Complaint</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Quick Links</h4><ul>
+      <li><a href="#contact">Free Consultation</a></li><li><a href="#tools">EMI Calculator</a></li>
+      <li><a href="#tools">CIBIL Check</a></li><li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Refund Policy</a></li><li><a href="#">Terms &amp; Conditions</a></li>
+      <li><a href="#">Disclaimer</a></li><li><a href="#">Be a Partner</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p class="disclaimer"><strong>Disclaimer:</strong> Smritikana Business Solutions is a private consultancy and is in no way associated with any Government Authority or Body. Any fees collected represent consultancy and professional service charges only.</p>
+    <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Disclaimer</a><a href="#">Contact</a></div>
+  </div>
+  <br><p style="font-size:10.5px;color:var(--muted);text-align:center;opacity:.5">© 2024 Smritikana Business Solutions. All Rights Reserved.</p>
+</footer>
+
+<!-- Floating CTA -->
+<div class="float-cta">
+  <a href="https://wa.me/91XXXXXXXXXX" class="float-btn wa" target="_blank">💬 WhatsApp Us</a>
+  <a href="#contact" class="float-btn primary">🎯 Free Consultation</a>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- ════════════════════════════ JS ════════════════════════════ -->
+<script>
+// ── CONFIG ─────────────────────────────────────────────────
+// When backend runs on same origin (production), leave as ''
+// During dev: 'http://localhost:5000'
+const API = (window.location.hostname === 'localhost' ||
+             window.location.hostname === '127.0.0.1')
+            ? 'http://localhost:5000'
+            : '';
+
+// ── TOAST ──────────────────────────────────────────────────
+function toast(msg, ms=3000){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), ms);
+}
+
+// ── PRICE FORMAT ───────────────────────────────────────────
+function fmtPrice(item){
+  const n = item.price;
+  if(item.exchange==='CRYPTO') return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  if(n>=1000) return '₹'+n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  return '₹'+n.toFixed(2);
+}
+
+// ── STOCK DATA ─────────────────────────────────────────────
+let stockData = [];
+
+function buildTicker(data){
+  if(!data.length) return;
+  // Duplicate array for seamless loop
+  const items = [...data, ...data];
+  const html  = items.map(s=>{
+    const up   = s.change >= 0;
+    const pct  = Math.abs(s.change_percent ?? s.changePercent ?? 0).toFixed(2);
+    const arrow= up ? '▲' : '▼';
+    return `<div class="t-item" onclick="tickerClick('${s.symbol}')">
+      <span class="t-sym">${s.label}</span>
+      <span class="t-price">${fmtPrice(s)}</span>
+      <span class="t-chg ${up?'up':'dn'}">${arrow} ${pct}%</span>
+    </div>`;
+  }).join('');
+  const speed = Math.max(40, data.length * 4);
+  document.getElementById('tickerInner').innerHTML =
+    `<div class="ticker-track" style="animation-duration:${speed}s">${html}</div>`;
+}
+
+function tickerClick(sym){
+  const s = stockData.find(x=>x.symbol===sym);
+  if(!s) return;
+  const up = s.change>=0;
+  const pct = Math.abs(s.change_percent ?? s.changePercent ?? 0).toFixed(2);
+  toast(`${s.label}: ${fmtPrice(s)}  ${up?'▲':'▼'} ${pct}%`);
+}
+
+// ── MARKET PANEL ───────────────────────────────────────────
+let panelFilter = 'all';
+const CATEGORY_SYM = {
+  indices: ['^NSEI','^BSESN','^NSEBANK','^CNXIT'],
+  india:   ['RELIANCE.NS','TCS.NS','INFY.NS','HDFCBANK.NS','ICICIBANK.NS',
+             'SBIN.NS','WIPRO.NS','LT.NS','AXISBANK.NS','BAJFINANCE.NS',
+             'HINDUNILVR.NS','KOTAKBANK.NS','BHARTIARTL.NS','MARUTI.NS','TATAMOTORS.NS'],
+  crypto:  ['BTC-USD','ETH-USD'],
+};
+
+function buildPanel(data, filter){
+  const filtered = filter==='all' ? data
+    : data.filter(s => (CATEGORY_SYM[filter]||[]).includes(s.symbol));
+  document.getElementById('mpGrid').innerHTML = filtered.map(s=>{
+    const up  = s.change >= 0;
+    const chg = (s.change_percent ?? s.changePercent ?? 0);
+    return `<div class="mp-card" onclick="tickerClick('${s.symbol}')">
+      <div class="mc-lbl">${s.exchange} · ${s.label}</div>
+      <div class="mc-px">${fmtPrice(s)}</div>
+      <div class="mc-chg ${up?'up':'dn'}">${up?'▲':'▼'} ${Math.abs(s.change).toFixed(2)} (${Math.abs(chg).toFixed(2)}%)</div>
+      ${s.stale?'<div style="font-size:9.5px;color:#9A9585;margin-top:3px">⚠ Stale data</div>':''}
+    </div>`;
+  }).join('');
+}
+
+function filterPanel(cat, btn){
+  panelFilter = cat;
+  document.querySelectorAll('.mp-tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  buildPanel(stockData, cat);
+}
+
+function toggleMarketPanel(){
+  const p = document.getElementById('marketPanel');
+  p.classList.toggle('open');
+  if(p.classList.contains('open')) buildPanel(stockData, panelFilter);
+}
+
+// ── FETCH STOCKS ───────────────────────────────────────────
+async function loadStocks(){
+  try{
+    const r = await fetch(API+'/api/stocks');
+    if(!r.ok) throw new Error('API '+r.status);
+    const j = await r.json();
+    if(j.data && j.data.length){
+      stockData = j.data;
+      buildTicker(stockData);
+      if(j.updated_at){
+        const d = new Date(j.updated_at);
+        document.getElementById('mktTime').textContent =
+          d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})+' IST ▾';
+      }
+      if(document.getElementById('marketPanel').classList.contains('open'))
+        buildPanel(stockData, panelFilter);
+      document.getElementById('mpFooter').textContent =
+        'Last updated: '+(j.updated_at ? new Date(j.updated_at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}) : '—');
+    }
+  }catch(e){
+    console.warn('Stock API unavailable, using simulated data');
+    loadSimulated();
+  }
+}
+
+// Fallback simulated data (when backend not running)
+function loadSimulated(){
+  if(stockData.length) return; // don't overwrite real data
+  const sim = [
+    {symbol:'^NSEI',   label:'NIFTY 50',   exchange:'INDEX',price:22480.50,change:134.20, change_percent:0.60},
+    {symbol:'^BSESN',  label:'SENSEX',     exchange:'INDEX',price:74120.30,change:420.10, change_percent:0.57},
+    {symbol:'^NSEBANK',label:'BANK NIFTY', exchange:'INDEX',price:48350.75,change:-180.40,change_percent:-0.37},
+    {symbol:'^CNXIT',  label:'NIFTY IT',   exchange:'INDEX',price:36820.60,change:290.80, change_percent:0.80},
+    {symbol:'RELIANCE.NS', label:'Reliance',    exchange:'NSE',price:2862.40,change:-18.30,change_percent:-0.64},
+    {symbol:'TCS.NS',      label:'TCS',          exchange:'NSE',price:3944.15,change:52.40, change_percent:1.35},
+    {symbol:'INFY.NS',     label:'Infosys',      exchange:'NSE',price:1698.75,change:28.60, change_percent:1.71},
+    {symbol:'HDFCBANK.NS', label:'HDFC Bank',    exchange:'NSE',price:1635.50,change:-9.80, change_percent:-0.60},
+    {symbol:'SBIN.NS',     label:'SBI',          exchange:'NSE',price:768.20,change:7.40,  change_percent:0.97},
+    {symbol:'WIPRO.NS',    label:'Wipro',        exchange:'NSE',price:478.60,change:5.20,  change_percent:1.10},
+    {symbol:'AXISBANK.NS', label:'Axis Bank',    exchange:'NSE',price:1124.30,change:14.70,change_percent:1.32},
+    {symbol:'BTC-USD',     label:'Bitcoin',      exchange:'CRYPTO',price:68240.00,change:1580.0,change_percent:2.37},
+    {symbol:'ETH-USD',     label:'Ethereum',     exchange:'CRYPTO',price:3612.00,change:94.0, change_percent:2.67},
+  ];
+  stockData = sim;
+  buildTicker(sim);
+  document.getElementById('mktTime').textContent = 'Simulated ▾';
+  // Animate prices slightly every 8s
+  setInterval(()=>{
+    stockData = stockData.map(s=>({
+      ...s,
+      price:          +(s.price*(1+(Math.random()-.5)*.0018)).toFixed(2),
+      change:         +(s.change+(Math.random()-.5)*1.5).toFixed(2),
+      change_percent: +(s.change_percent+(Math.random()-.5)*.08).toFixed(2),
+    }));
+    buildTicker(stockData);
+    if(document.getElementById('marketPanel').classList.contains('open'))
+      buildPanel(stockData, panelFilter);
+  }, 8000);
+}
+
+loadStocks();
+setInterval(loadStocks, 60000); // re-poll backend every 60s
+
+// ── EMI CALCULATOR ─────────────────────────────────────────
+function calcEMI(){
+  const P = +document.getElementById('lR').value;
+  const r = +document.getElementById('rR').value / 12 / 100;
+  const n = +document.getElementById('tR').value;
+  const emi = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+  document.getElementById('lAmt').textContent = '₹'+P.toLocaleString('en-IN');
+  document.getElementById('rAmt').textContent = document.getElementById('rR').value+'%';
+  document.getElementById('tAmt').textContent = n+' months';
+  document.getElementById('emiOut').textContent = '₹'+Math.round(emi).toLocaleString('en-IN');
+}
+calcEMI();
+
+// ── FORM HELPERS ───────────────────────────────────────────
+function showMsg(id, type, text){
+  const el = document.getElementById(id);
+  el.className = 'form-msg '+(type==='ok'?'ok':'err');
+  el.textContent = text;
+  setTimeout(()=>{ el.className='form-msg'; el.textContent=''; }, 7000);
+}
+
+async function postJSON(path, data){
+  const r = await fetch(API+path,{
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  });
+  return r.json();
+}
+
+// ── CONTACT FORM ───────────────────────────────────────────
+async function submitLead(e){
+  const btn = e.target;
+  const name    = document.getElementById('lName').value.trim();
+  const mobile  = document.getElementById('lMobile').value.trim();
+  const email   = document.getElementById('lEmail').value.trim();
+  const service = document.getElementById('lService').value;
+  const message = document.getElementById('lMessage').value.trim();
+  if(!name||!mobile){ showMsg('lMsg','err','Name and mobile number are required.'); return; }
+  btn.disabled=true; btn.textContent='Sending…';
+  try{
+    const j = await postJSON('/api/leads',{name,mobile,email,service,message});
+    if(j.success){
+      showMsg('lMsg','ok', j.message||'Thank you! We will contact you within 24 hours.');
+      ['lName','lMobile','lEmail','lMessage'].forEach(id=>document.getElementById(id).value='');
+    } else showMsg('lMsg','err', j.error||'Something went wrong. Please try again.');
+  }catch{
+    showMsg('lMsg','err','Unable to reach server. Please call us directly.');
+  }
+  btn.disabled=false; btn.textContent='Request Free Consultation →';
+}
+
+// ── CIBIL FORM ─────────────────────────────────────────────
+async function submitCibil(e){
+  const btn = e.target;
+  const name    = document.getElementById('cName').value.trim();
+  const mobile  = document.getElementById('cMobile').value.trim();
+  const purpose = document.getElementById('cPurpose').value;
+  if(!name||!mobile){ showMsg('cMsg','err','Name and mobile are required.'); return; }
+  btn.disabled=true; btn.textContent='Submitting…';
+  try{
+    const j = await postJSON('/api/cibil',{name,mobile,purpose});
+    if(j.success){
+      showMsg('cMsg','ok', j.message||'Received! Our team will call you within 24 hours.');
+      document.getElementById('cName').value='';
+      document.getElementById('cMobile').value='';
+    } else showMsg('cMsg','err', j.error||'Something went wrong.');
+  }catch{
+    showMsg('cMsg','err','Unable to reach server. Please call us directly.');
+  }
+  btn.disabled=false; btn.textContent='Check Eligibility';
+}
+
+// ── REGISTRATION TABS ──────────────────────────────────────
+function showTab(id, btn){
+  document.querySelectorAll('.reg-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.reg-tab').forEach(t=>t.classList.remove('active'));
+  const panel = document.getElementById('tab-'+id);
+  if(panel) panel.classList.add('active');
+  if(btn) btn.classList.add('active');
+  else document.querySelectorAll('.reg-tab').forEach(t=>{
+    if((t.getAttribute('onclick')||'').includes("'"+id+"'")) t.classList.add('active');
+  });
+}
+
+// ── LANGUAGE ───────────────────────────────────────────────
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── SMOOTH SCROLL ──────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+</script>
+</body>
+</html>
