@@ -3358,19 +3358,26 @@
         const lang = this.getAttribute('data-lang');
         if (!lang) return;
 
-        // Temporarily reset all 
+        // Visual update
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
 
-        // Set Google Translate cookie and reload for a clean full-page translation
-        if (lang === 'en') {
-          // Clear cookie to revert to original
-          document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}`;
-          document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        } else {
-          document.cookie = `googtrans=/en/${lang}; path=/; domain=${window.location.hostname}`;
+        // Robust Cookie clearing
+        const domain = window.location.hostname;
+        const rootDomain = domain.includes('.') ? domain.substring(domain.indexOf('.')) : domain;
+        const domainsToClear = [domain, `.${domain}`, rootDomain, `.${rootDomain}`];
+
+        domainsToClear.forEach(d => {
+          document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${d}`;
+        });
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+
+        // Set new translation cookie if not English
+        if (lang !== 'en') {
+          document.cookie = `googtrans=/en/${lang}; path=/; domain=${domain}`;
           document.cookie = `googtrans=/en/${lang}; path=/`;
         }
+
         window.location.reload();
       });
     });
