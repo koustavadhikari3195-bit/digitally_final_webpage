@@ -64,6 +64,13 @@
       overflow-x: hidden
     }
 
+    /* ── STICKY SITE HEADER WRAPPER ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
     /* ── TRUST BAR ── */
     .trust-bar {
       background: var(--gold);
@@ -406,9 +413,6 @@
     nav {
       background: var(--dark2);
       border-bottom: 1px solid rgba(184, 151, 42, .2);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
       padding: 0 40px;
       display: flex;
       align-items: center;
@@ -1829,102 +1833,107 @@
 
 <body>
 
-  <!-- Trust Bar -->
-  <div class="trust-bar">ISO Certified &nbsp;|&nbsp; 100% Online — No Physical Visit Required &nbsp;|&nbsp; <a
-      href="tel:+919830254434">📞 +91 98302 54434</a> &nbsp;|&nbsp; Pan-India Service</div>
+  <!-- ══ STICKY SITE HEADER ══════════════════════════════════ -->
+  <div class="site-header">
 
-  <!-- ══ LIVE STOCK TICKER ══════════════════════════════════════ -->
-  <div class="ticker-outer" id="tickerOuter">
-    <div class="ticker-badge">
-      <div class="live-dot-badge"></div>
-      📈 LIVE MARKETS
-    </div>
-    <div class="ticker-viewport">
-      <div id="tickerInner">
-        <div class="ticker-loading">
-          <div class="spin"></div><span>Loading live market data…</span>
+    <!-- Trust Bar -->
+    <div class="trust-bar">ISO Certified &nbsp;|&nbsp; 100% Online — No Physical Visit Required &nbsp;|&nbsp; <a
+        href="tel:+919830254434">📞 +91 98302 54434</a> &nbsp;|&nbsp; Pan-India Service</div>
+
+    <!-- ══ LIVE STOCK TICKER ══════════════════════════════════════ -->
+    <div class="ticker-outer" id="tickerOuter">
+      <div class="ticker-badge">
+        <div class="live-dot-badge"></div>
+        📈 LIVE MARKETS
+      </div>
+      <div class="ticker-viewport">
+        <div id="tickerInner">
+          <div class="ticker-loading">
+            <div class="spin"></div><span>Loading live market data…</span>
+          </div>
         </div>
       </div>
+      <div class="ticker-right">
+        <div class="live-ind" id="liveDot" title="Click to expand" onclick="toggleMarketPanel()"></div>
+        <span class="market-toggle" id="mktTime" onclick="toggleMarketPanel()">Markets ▾</span>
+      </div>
     </div>
-    <div class="ticker-right">
-      <div class="live-ind" id="liveDot" title="Click to expand" onclick="toggleMarketPanel()"></div>
-      <span class="market-toggle" id="mktTime" onclick="toggleMarketPanel()">Markets ▾</span>
+
+    <!-- Market Detail Panel -->
+    <div class="market-panel" id="marketPanel">
+      <button class="mp-close" onclick="toggleMarketPanel()">✕</button>
+      <div class="mp-tabs">
+        <button class="mp-tab active" onclick="filterPanel('all',this)">All</button>
+        <button class="mp-tab" onclick="filterPanel('indices',this)">Indices</button>
+        <button class="mp-tab" onclick="filterPanel('india',this)">NSE Stocks</button>
+        <button class="mp-tab" onclick="filterPanel('crypto',this)">Crypto</button>
+      </div>
+      <div class="mp-grid" id="mpGrid"></div>
+      <p class="mp-footer" id="mpFooter"></p>
     </div>
-  </div>
 
-  <!-- Market Detail Panel -->
-  <div class="market-panel" id="marketPanel">
-    <button class="mp-close" onclick="toggleMarketPanel()">✕</button>
-    <div class="mp-tabs">
-      <button class="mp-tab active" onclick="filterPanel('all',this)">All</button>
-      <button class="mp-tab" onclick="filterPanel('indices',this)">Indices</button>
-      <button class="mp-tab" onclick="filterPanel('india',this)">NSE Stocks</button>
-      <button class="mp-tab" onclick="filterPanel('crypto',this)">Crypto</button>
+    <!-- Language Bar -->
+    <div class="lang-bar" id="langBar">
+      <span>Language:</span>
+      <button class="lang-btn active" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="bn">বাংলা</button>
+      <button class="lang-btn" data-lang="hi">हिंदी</button>
+      <button class="lang-btn" data-lang="gu">ગુજરાતિ</button>
+      <button class="lang-btn" data-lang="kn">ಕನ್ನಡ</button>
+      <button class="lang-btn" data-lang="ml">മലയാളം</button>
+      <button class="lang-btn" data-lang="mr">मराठी</button>
+      <button class="lang-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
+      <button class="lang-btn" data-lang="ta">தமிழ்</button>
+      <button class="lang-btn" data-lang="te">తెలుగు</button>
+      <div id="google_translate_element" style="display:none;"></div>
     </div>
-    <div class="mp-grid" id="mpGrid"></div>
-    <p class="mp-footer" id="mpFooter"></p>
-  </div>
 
-  <!-- Language Bar -->
-  <div class="lang-bar" id="langBar">
-    <span>Language:</span>
-    <button class="lang-btn active" data-lang="en">English</button>
-    <button class="lang-btn" data-lang="bn">বাংলা</button>
-    <button class="lang-btn" data-lang="hi">हिंदी</button>
-    <button class="lang-btn" data-lang="gu">ગુજરાતિ</button>
-    <button class="lang-btn" data-lang="kn">ಕನ್ನಡ</button>
-    <button class="lang-btn" data-lang="ml">മലയാളം</button>
-    <button class="lang-btn" data-lang="mr">मराठी</button>
-    <button class="lang-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
-    <button class="lang-btn" data-lang="ta">தமிழ்</button>
-    <button class="lang-btn" data-lang="te">తెలుగు</button>
-    <div id="google_translate_element" style="display:none;"></div>
-  </div>
+    <!-- Nav -->
+    <nav>
+      <a href="#" class="nav-logo">Smritikana<span>Business Solutions</span></a>
+      <ul class="nav-links">
+        <li><a href="#services">Services ▾</a>
+          <div class="dropdown">
+            <a href="#registration">Company Registration</a>
+            <a href="#compliance">Tax &amp; Compliance</a>
+            <a href="#legal">Legal Solutions</a>
+            <a href="#registration">Business Alteration</a>
+            <a href="#registration">GST Services</a>
+            <a href="#registration">Intellectual Property</a>
+          </div>
+        </li>
+        <li><a href="#registration">Registration ▾</a>
+          <div class="dropdown">
+            <a href="#registration" onclick="showTab('pvt',null)">Private Limited Company</a>
+            <a href="#registration" onclick="showTab('llp',null)">LLP Registration</a>
+            <a href="#registration" onclick="showTab('opc',null)">OPC Registration</a>
+            <a href="#registration" onclick="showTab('nidhi',null)">Nidhi Company</a>
+            <a href="#registration" onclick="showTab('mf',null)">Microfinance Company</a>
+            <a href="#registration" onclick="showTab('nbfc',null)">NBFC Registration</a>
+            <a href="#registration" onclick="showTab('prod',null)">Producer Company</a>
+            <a href="#registration" onclick="showTab('s8',null)">Section 8 (NGO)</a>
+            <a href="#registration" onclick="showTab('soc',null)">Society</a>
+            <a href="#registration" onclick="showTab('trust',null)">Trust</a>
+            <a href="#registration" onclick="showTab('pub',null)">Public Limited</a>
+          </div>
+        </li>
+        <li><a href="#tools">Tools ▾</a>
+          <div class="dropdown">
+            <a href="#tools">EMI Calculator</a>
+            <a href="#tools">CIBIL Eligibility Checker</a>
+          </div>
+        </li>
+        <li><a href="#compliance">Compliance</a></li>
+        <li><a href="#legal">Legal</a></li>
+        <li><a href="#contact" class="nav-cta">Free Consultation</a></li>
+      </ul>
+      <!-- Hamburger (mobile only) -->
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" onclick="toggleDrawer()">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
 
-  <!-- Nav -->
-  <nav>
-    <a href="#" class="nav-logo">Smritikana<span>Business Solutions</span></a>
-    <ul class="nav-links">
-      <li><a href="#services">Services ▾</a>
-        <div class="dropdown">
-          <a href="#registration">Company Registration</a>
-          <a href="#compliance">Tax &amp; Compliance</a>
-          <a href="#legal">Legal Solutions</a>
-          <a href="#registration">Business Alteration</a>
-          <a href="#registration">GST Services</a>
-          <a href="#registration">Intellectual Property</a>
-        </div>
-      </li>
-      <li><a href="#registration">Registration ▾</a>
-        <div class="dropdown">
-          <a href="#registration" onclick="showTab('pvt',null)">Private Limited Company</a>
-          <a href="#registration" onclick="showTab('llp',null)">LLP Registration</a>
-          <a href="#registration" onclick="showTab('opc',null)">OPC Registration</a>
-          <a href="#registration" onclick="showTab('nidhi',null)">Nidhi Company</a>
-          <a href="#registration" onclick="showTab('mf',null)">Microfinance Company</a>
-          <a href="#registration" onclick="showTab('nbfc',null)">NBFC Registration</a>
-          <a href="#registration" onclick="showTab('prod',null)">Producer Company</a>
-          <a href="#registration" onclick="showTab('s8',null)">Section 8 (NGO)</a>
-          <a href="#registration" onclick="showTab('soc',null)">Society</a>
-          <a href="#registration" onclick="showTab('trust',null)">Trust</a>
-          <a href="#registration" onclick="showTab('pub',null)">Public Limited</a>
-        </div>
-      </li>
-      <li><a href="#tools">Tools ▾</a>
-        <div class="dropdown">
-          <a href="#tools">EMI Calculator</a>
-          <a href="#tools">CIBIL Eligibility Checker</a>
-        </div>
-      </li>
-      <li><a href="#compliance">Compliance</a></li>
-      <li><a href="#legal">Legal</a></li>
-      <li><a href="#contact" class="nav-cta">Free Consultation</a></li>
-    </ul>
-    <!-- Hamburger (mobile only) -->
-    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" onclick="toggleDrawer()">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+  </div><!-- /.site-header -->
 
   <!-- Mobile Navigation Drawer -->
   <div class="nav-drawer" id="navDrawer" onclick="closeDrawer(event)">
@@ -3352,6 +3361,28 @@
       }
     })();
 
+    /**
+     * Aggressively clear googtrans cookie across every possible domain/path combo.
+     * Google Translate sets the cookie on multiple domain levels; missing even one
+     * causes the old language to "stick".
+     */
+    function nukeGoogTransCookies() {
+      const host = window.location.hostname;          // e.g. mysite.vercel.app
+      const parts = host.split('.');
+      const domains = [host, '.' + host, ''];         // bare (no domain attr)
+      // Build all parent-domain combos:  .vercel.app, vercel.app, etc.
+      for (let i = 1; i < parts.length; i++) {
+        const d = parts.slice(i).join('.');
+        domains.push(d, '.' + d);
+      }
+      const expire = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
+      domains.forEach(d => {
+        const domainPart = d ? `; domain=${d}` : '';
+        document.cookie = `googtrans=; ${expire}; path=/${domainPart}`;
+        document.cookie = `googtrans=; ${expire}; path=${window.location.pathname}${domainPart}`;
+      });
+    }
+
     // Handle language button clicks
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', function () {
@@ -3362,21 +3393,34 @@
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
 
-        // Robust Cookie clearing
-        const domain = window.location.hostname;
-        const rootDomain = domain.includes('.') ? domain.substring(domain.indexOf('.')) : domain;
-        const domainsToClear = [domain, `.${domain}`, rootDomain, `.${rootDomain}`];
+        // 1. Nuke every possible existing googtrans cookie
+        nukeGoogTransCookies();
 
-        domainsToClear.forEach(d => {
-          document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${d}`;
-        });
-        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-
-        // Set new translation cookie if not English
+        // 2. Set the new cookie on BOTH the current hostname AND without a domain
         if (lang !== 'en') {
-          document.cookie = `googtrans=/en/${lang}; path=/; domain=${domain}`;
-          document.cookie = `googtrans=/en/${lang}; path=/`;
+          const val = `/en/${lang}`;
+          document.cookie = `googtrans=${val}; path=/`;
+          document.cookie = `googtrans=${val}; path=/; domain=${window.location.hostname}`;
+          // Also try root domain for production
+          const parts = window.location.hostname.split('.');
+          if (parts.length > 2) {
+            const root = '.' + parts.slice(-2).join('.');
+            document.cookie = `googtrans=${val}; path=/; domain=${root}`;
+          }
         }
+
+        // 3. Also poke the translate iframe directly (handles cases where
+        //    cookie-based switching fails due to CORS or SameSite rules)
+        try {
+          const frame = document.querySelector('.goog-te-combo');
+          if (frame) {
+            frame.value = lang === 'en' ? '' : lang;
+            frame.dispatchEvent(new Event('change'));
+            // Give the translate widget a moment, then reload for a clean state
+            setTimeout(() => window.location.reload(), 400);
+            return;
+          }
+        } catch (_) { /* ignore, fall through to normal reload */ }
 
         window.location.reload();
       });
