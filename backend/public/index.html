@@ -1134,9 +1134,81 @@
 
     .calc-result strong {
       font-family: 'DM Sans', sans-serif;
-      font-size: 30px;
+      font-size: 24px;
       font-weight: 700;
       color: var(--gold-l)
+    }
+
+    .calc-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 14px 0;
+      line-height: 1.5;
+    }
+
+    .calc-note a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .amort-table-wrap {
+      margin-top: 30px;
+      overflow-x: auto;
+      border: 1px solid rgba(184, 151, 42, .15);
+      border-radius: 8px;
+    }
+
+    .amort-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      color: var(--txt);
+      min-width: 400px;
+    }
+
+    .amort-table th {
+      background: var(--dark3);
+      padding: 10px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--gold-l);
+      border-bottom: 2px solid rgba(184, 151, 42, .2);
+    }
+
+    .amort-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .amort-table tr:nth-child(even) {
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .amort-table tr:hover {
+      background: rgba(184, 151, 42, .05);
+    }
+
+    .mfs-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mfs-feat-item {
+      background: var(--dark3);
+      padding: 10px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, .05);
+      font-size: 11.5px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mfs-feat-item::before {
+      content: '🚀';
     }
 
     .form-group {
@@ -1904,14 +1976,15 @@
         </li>
         <li><a href="#registration">Registration ▾</a>
           <div class="dropdown">
-            <a href="#registration" onclick="showTab('pvt',null)">Private Limited Company</a>
-            <a href="#registration" onclick="showTab('llp',null)">LLP Registration</a>
-            <a href="#registration" onclick="showTab('opc',null)">OPC Registration</a>
-            <a href="#registration" onclick="showTab('nidhi',null)">Nidhi Company</a>
             <a href="#registration" onclick="showTab('mf',null)">Microfinance Company</a>
-            <a href="#registration" onclick="showTab('nbfc',null)">NBFC Registration</a>
-            <a href="#registration" onclick="showTab('prod',null)">Producer Company</a>
             <a href="#registration" onclick="showTab('s8',null)">Section 8 (NGO)</a>
+            <a href="#registration" onclick="showTab('nbfc',null)">NBFC Registration</a>
+            <a href="#registration" onclick="showTab('mfs',null)">Microfinance Software</a>
+            <hr style="opacity:0.1;margin:5px 0;">
+            <a href="#registration" onclick="showTab('pvt',null)">Private Limited</a>
+            <a href="#registration" onclick="showTab('llp',null)">LLP Registration</a>
+            <a href="#registration" onclick="showTab('nidhi',null)">Nidhi Company</a>
+            <a href="#registration" onclick="showTab('prod',null)">Producer Company</a>
             <a href="#registration" onclick="showTab('soc',null)">Society</a>
             <a href="#registration" onclick="showTab('trust',null)">Trust</a>
             <a href="#registration" onclick="showTab('pub',null)">Public Limited</a>
@@ -2031,21 +2104,99 @@
     <div class="sec-title">Company Registration Services</div>
     <div class="sec-sub">Select an entity type to explore the process, documents, and key details.</div>
     <div class="reg-tabs">
-      <button class="reg-tab active" onclick="showTab('pvt',this)">Private Ltd</button>
-      <button class="reg-tab" onclick="showTab('llp',this)">LLP</button>
-      <button class="reg-tab" onclick="showTab('opc',this)">OPC</button>
-      <button class="reg-tab" onclick="showTab('nidhi',this)">Nidhi Co.</button>
-      <button class="reg-tab" onclick="showTab('mf',this)">Microfinance</button>
-      <button class="reg-tab" onclick="showTab('nbfc',this)">NBFC</button>
-      <button class="reg-tab" onclick="showTab('prod',this)">Producer Co.</button>
+      <button class="reg-tab active" onclick="showTab('mf',this)">Microfinance</button>
       <button class="reg-tab" onclick="showTab('s8',this)">Section 8</button>
+      <button class="reg-tab" onclick="showTab('nbfc',this)">NBFC</button>
+      <button class="reg-tab" onclick="showTab('mfs',this)">MFI Software</button>
+      <button class="reg-tab" onclick="showTab('pvt',this)">Private Ltd</button>
+      <button class="reg-tab" onclick="showTab('llp',this)">LLP</button>
+      <button class="reg-tab" onclick="showTab('nidhi',this)">Nidhi Co.</button>
+      <button class="reg-tab" onclick="showTab('prod',this)">Producer Co.</button>
       <button class="reg-tab" onclick="showTab('soc',this)">Society</button>
       <button class="reg-tab" onclick="showTab('trust',this)">Trust</button>
       <button class="reg-tab" onclick="showTab('pub',this)">Public Ltd</button>
     </div>
     <div id="regPanels">
+      <!-- ── Microfinance ── -->
+      <div id="tab-mf" class="reg-panel active">
+        <div class="reg-content">
+          <h3>Microfinance Company</h3>
+          <p>In India, microfinance loans are collateral-free loans for households with an annual income up to
+            ₹3,00,000, with loan amounts commonly ranging between ₹5,000 and ₹1,50,000.</p>
+          <div class="keynote">
+            <div class="keynote-title">What is Microfinance?</div>
+            <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Microfinance provides small loans to help
+              small shop owners, farmers, women entrepreneurs, and self-help groups (SHGs).</p>
+            <ul>
+              <li><strong>Loan Amount:</strong> ₹5,000 to ₹1,50,000 (standard range)</li>
+              <li><strong>Interest Rate:</strong> 18% – 26% per year (RBI regulated)</li>
+              <li><strong>Regulator:</strong> Reserve Bank of India (RBI)</li>
+            </ul>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item">Aadhaar Card</div>
+            <div class="doc-item">PAN Card</div>
+            <div class="doc-item">Income Proof</div>
+            <div class="doc-item">Address Proof</div>
+            <div class="doc-item">Passport Photo</div>
+            <div class="doc-item">Bank Statement</div>
+          </div><br>
+          <a href="#contact" class="btn-primary">Register Now</a>
+        </div>
+        <div>
+          <div class="keynote" style="margin-bottom:15px;">
+            <div class="keynote-title">Features & Advantages</div>
+            <ul>
+              <li>No big collateral required</li>
+              <li>Easy documentation & Quick approval</li>
+              <li>Group lending model common</li>
+              <li>Improves financial inclusion</li>
+            </ul>
+          </div>
+          <div class="keynote" style="background:rgba(193, 75, 42, 0.05);border-color:rgba(193, 75, 42, 0.2);">
+            <div class="keynote-title" style="color:var(--accent);">Risks & Constraints</div>
+            <ul>
+              <li>50% monthly household income limit for repayments</li>
+              <li>High interest compared to banks</li>
+              <li>Weekly/Monthly EMI pressure</li>
+              <li>Risk of over-borrowing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Microfinance Software ── -->
+      <div id="tab-mfs" class="reg-panel">
+        <div class="reg-content">
+          <h3>Microfinance Company Software</h3>
+          <p>Complete ERP solution for MFIs, NBFCs, and Credit Societies. Manage your entire loan portfolio, group
+            lending, and collections with ease.</p>
+          <div class="mfs-features">
+            <div class="mfs-feat-item">Group/Center Management</div>
+            <div class="mfs-feat-item">Loan Origination System</div>
+            <div class="mfs-feat-item">Automated EMI Calculation</div>
+            <div class="mfs-feat-item">Mobile App for Field Officers</div>
+            <div class="mfs-feat-item">RBI Compliance Reporting</div>
+            <div class="mfs-feat-item">Tally Integration</div>
+          </div><br>
+          <a href="#contact" class="btn-primary">Get Demo Software</a>
+        </div>
+        <div>
+          <div class="keynote">
+            <div class="keynote-title">Why Our Software?</div>
+            <ul>
+              <li>Real-time collection tracking</li>
+              <li>Integrated Accounting & Ledger</li>
+              <li>SMS/WhatsApp notifications</li>
+              <li>Cloud-based & Secure</li>
+              <li>User-friendly for rural staff</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <!-- ── Private Limited ── -->
-      <div id="tab-pvt" class="reg-panel active">
+      <div id="tab-pvt" class="reg-panel">
         <div class="reg-content">
           <h3>Private Limited Company</h3>
           <p>Most popular choice for startups and growing businesses. Offers limited liability, separate legal identity,
@@ -2296,69 +2447,7 @@
           </div>
         </div>
       </div>
-      <!-- ── Microfinance ── -->
-      <div id="tab-mf" class="reg-panel">
-        <div class="reg-content">
-          <h3>Microfinance Company</h3>
-          <p>Provides small loans (under ₹50,000) to households and small businesses without banking access. Interest
-            rate capped at 26% per annum.</p>
-          <div class="keynote">
-            <div class="keynote-title">Key Notes</div>
-            <ul>
-              <li>Registration in 10–15 working days</li>
-              <li>Interest rate capped at 26% p.a.</li>
-              <li>Cannot accept public deposits</li>
-              <li>Encourages financial self-sufficiency</li>
-            </ul>
-          </div>
-          <div class="doc-list">
-            <div class="doc-item">PAN Card</div>
-            <div class="doc-item">Aadhaar Card</div>
-            <div class="doc-item">Passport Photo</div>
-            <div class="doc-item">Address Proof</div>
-            <div class="doc-item">Office Utility Bill</div>
-            <div class="doc-item">NOC</div>
-          </div><br>
-          <a href="#contact" class="btn-primary">Register Now</a>
-        </div>
-        <div>
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <h4>Company Registration</h4>
-              <p>Incorporate as Pvt/Public Ltd with initial capital of ₹1,00,000.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-body">
-              <h4>Raise Capital</h4>
-              <p>Increase paid-up capital to ₹5 Crore or ₹2 Crore (equity shares only).</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-body">
-              <h4>Bank Account &amp; FD</h4>
-              <p>Deposit capital as Fixed Deposit; obtain Certificate of No Lien from bank.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-body">
-              <h4>File Online with RBI</h4>
-              <p>Application filed; Company Application Reference Number received.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">5</div>
-            <div class="step-body">
-              <h4>Hard Copy to RBI</h4>
-              <p>Physical submission for due diligence. Certificate of Commencement on approval.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- ── Microfinance (Old - Replaced Above) ── -->
       <!-- ── NBFC ── -->
       <div id="tab-nbfc" class="reg-panel">
         <div class="reg-content">
@@ -2718,22 +2807,71 @@
     <div class="sec-title">Financial Planning Tools</div>
     <div class="sec-sub">Plan your business finances before you begin — live markets plus built-in calculators.</div>
     <div class="tools-grid">
-      <div class="tool-card">
-        <h3>📐 EMI Calculator</h3>
-        <p>Plan your business loan repayments. Adjust principal, interest, and tenure to find your ideal EMI.</p>
-        <div class="calc-row">
-          <div class="calc-label">Loan Amount <strong id="lAmt">₹10,00,000</strong></div><input type="range"
-            class="calc-range" id="lR" min="100000" max="10000000" step="100000" value="1000000" oninput="calcEMI()">
+      <div class="tool-card" style="grid-column: span 2;">
+        <h3 style="margin-bottom:20px;">📐 Advanced Loan Calculator</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Repayment Interval</label>
+            <select id="lInterval" onchange="calcLoan()">
+              <option value="365">Daily</option>
+              <option value="52">Weekly</option>
+              <option value="26">Biweekly</option>
+              <option value="24">Semi-monthly</option>
+              <option value="12">Monthly</option>
+              <option value="6">Bimonthly</option>
+              <option value="4">Quarterly</option>
+              <option value="2">Half-yearly</option>
+              <option value="1" selected>Yearly</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Loan Amount (Principal)</label>
+            <input type="number" id="lPrincipal" value="1000000" oninput="calcLoan()">
+          </div>
         </div>
-        <div class="calc-row">
-          <div class="calc-label">Interest Rate <strong id="rAmt">12%</strong> p.a.</div><input type="range"
-            class="calc-range" id="rR" min="6" max="24" step="0.5" value="12" oninput="calcEMI()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Annual Interest Rate (%)</label>
+            <input type="number" id="lRate" value="9.5" step="0.1" oninput="calcLoan()">
+          </div>
+          <div class="form-group">
+            <label>Number of Payments</label>
+            <input type="number" id="lPayments" value="10" oninput="calcLoan()">
+          </div>
         </div>
-        <div class="calc-row">
-          <div class="calc-label">Tenure <strong id="tAmt">24 months</strong></div><input type="range"
-            class="calc-range" id="tR" min="6" max="84" step="6" value="24" oninput="calcEMI()">
+
+        <div class="calc-result" id="calcResult">
+          <div>
+            <span id="periodLabel">Yearly Payment</span>
+            <strong id="lPeriodicOut">₹1,59,266.15</strong>
+          </div>
+          <div style="text-align:right">
+            <span>Total Interest</span>
+            <strong id="lInterestOut" style="font-size:20px">₹5,92,661.50</strong>
+          </div>
         </div>
-        <div class="calc-result"><span>Monthly EMI</span><strong id="emiOut">₹47,073</strong></div>
+
+        <div class="calc-note">
+          Download App: Calculate loan repayments with this all-in-one calculator for <a href="#">Android</a> and <a
+            href="#">iPhone/ iPad</a>.
+        </div>
+
+        <div id="amortizationWrap" class="amort-table-wrap" style="display:none;">
+          <h4
+            style="padding:15px;background:var(--dark3);margin:0;border-bottom:1px solid rgba(184,151,42,0.2);font-size:14px;color:var(--gold-l);">
+            Loan Amortization Schedule</h4>
+          <table class="amort-table">
+            <thead>
+              <tr>
+                <th>Sl.</th>
+                <th>Interest</th>
+                <th>Principal</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amortBody"></tbody>
+          </table>
+        </div>
       </div>
       <div class="tool-card">
         <h3>🔍 CIBIL Eligibility Check</h3>
@@ -3224,18 +3362,52 @@
     loadStocks();
     setInterval(loadStocks, 60000); // re-poll backend every 60s
 
-    // ── EMI CALCULATOR ─────────────────────────────────────────
-    function calcEMI() {
-      const P = +document.getElementById('lR').value;
-      const r = +document.getElementById('rR').value / 12 / 100;
-      const n = +document.getElementById('tR').value;
-      const emi = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
-      document.getElementById('lAmt').textContent = '₹' + P.toLocaleString('en-IN');
-      document.getElementById('rAmt').textContent = document.getElementById('rR').value + '%';
-      document.getElementById('tAmt').textContent = n + ' months';
-      document.getElementById('emiOut').textContent = '₹' + Math.round(emi).toLocaleString('en-IN');
+    // ── ADVANCED LOAN CALCULATOR ───────────────────────────
+    function calcLoan() {
+      const A = +document.getElementById('lPrincipal').value || 0;
+      const r = +document.getElementById('lRate').value / 100 || 0;
+      const t = +document.getElementById('lInterval').value || 1;
+      const n = +document.getElementById('lPayments').value || 0;
+
+      if (A <= 0 || r <= 0 || n <= 0) return;
+
+      const i = r / t;
+      // Formula: R = A * i / (1 - (1 + i)^-n)
+      const R = A * i / (1 - Math.pow(1 + i, -n));
+      const totalRepayment = R * n;
+      const totalInterest = totalRepayment - A;
+
+      // Update Labels
+      const intervalText = document.getElementById('lInterval').options[document.getElementById('lInterval').selectedIndex].text;
+      document.getElementById('periodLabel').textContent = intervalText + ' Payment';
+
+      // Update Outputs
+      document.getElementById('lPeriodicOut').textContent = '₹' + R.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('lInterestOut').textContent = '₹' + totalInterest.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      // Build Amortization table
+      const wrap = document.getElementById('amortizationWrap');
+      const body = document.getElementById('amortBody');
+      wrap.style.display = 'block';
+      let html = '';
+      let balance = A;
+
+      for (let s = 1; s <= n; s++) {
+        const interest = balance * i;
+        const principal = R - interest;
+        balance -= principal;
+        if (balance < 0) balance = 0;
+
+        html += `<tr>
+          <td>${s}</td>
+          <td>${interest.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td>${principal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td>${balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        </tr>`;
+      }
+      body.innerHTML = html;
     }
-    calcEMI();
+    calcLoan();
 
     // ── FORM HELPERS ───────────────────────────────────────────
     function showMsg(id, type, text) {
