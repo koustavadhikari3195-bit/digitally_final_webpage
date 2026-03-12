@@ -1,4 +1,4 @@
-﻿"""
+"""
 ════════════════════════════════════════════════════════════════
   SMRITIKANA BUSINESS SOLUTIONS — Python Flask Backend
   Stock data: Yahoo Finance (yfinance) — no API key needed
@@ -17,9 +17,6 @@
     GET  /api/stocks/<category>       — indices | india | crypto
     GET  /api/stocks/refresh          — force-refresh cache
     POST /api/leads                   — save consultation request
-    POST /api/cibil                   — save CIBIL enquiry
-    GET  /api/admin/leads             — list leads (x-admin-secret header)
-    GET  /api/admin/cibil             — list CIBIL enquiries (admin)
     PATCH /api/admin/leads/<id>       — update lead status (admin)
 ════════════════════════════════════════════════════════════════
 """
@@ -294,34 +291,7 @@ def send_lead_email(lead: dict):
         log.warning(f"Email failed: {e}")
 
 
-def send_cibil_email(record: dict):
-    """Send notification email when a CIBIL enquiry is submitted."""
-    if not EMAIL_USER or not EMAIL_PASS:
-        return
-    try:
-        html = f"""
-        <div style="font-family:sans-serif;max-width:520px">
-          <h2 style="color:#B8972A;border-bottom:2px solid #B8972A;padding-bottom:8px">
-            New CIBIL Eligibility Request
-          </h2>
-          <table style="width:100%;border-collapse:collapse;font-size:14px">
-            {''.join(f'<tr><td style="padding:8px 12px;background:#f9f6ee;font-weight:600;width:110px">{k}</td>'
-                     f'<td style="padding:8px 12px;border:1px solid #eee">{v}</td></tr>'
-                     for k, v in [
-                         ("Name",    record.get("name", "—")),
-                         ("Mobile",  record.get("mobile", "—")),
-                         ("Purpose", record.get("purpose", "—")),
-                         ("Time",    datetime.now().strftime("%d %b %Y %I:%M %p")),
-                     ])}
-          </table>
-          <p style="font-size:11px;color:#999;margin-top:12px">Smritikana Business Solutions — Auto Notification</p>
-        </div>"""
-        send_notification_email(
-            subject=f"🔍 CIBIL Enquiry — {record['name']}",
-            html=html,
-        )
-    except Exception as e:
-        log.warning(f"CIBIL email failed: {e}")
+
 
 
 # ─── RATE LIMITING (simple in-memory) ────────────────────────
@@ -457,40 +427,7 @@ def create_lead():
     })
 
 
-@app.route("/api/cibil", methods=["POST"])
-def create_cibil():
-    ip = request.remote_addr
-    if not rate_limit_form(ip):
-        return jsonify({"error": "Too many requests. Please try again later."}), 429
 
-    body = request.get_json(silent=True) or {}
-    name    = (body.get("name")    or "").strip()[:120]
-    mobile  = (body.get("mobile")  or "").strip()[:20]
-    purpose = (body.get("purpose") or "").strip()[:80]
-
-    if not name or not mobile:
-        return jsonify({"error": "Name and mobile are required."}), 400
-    if not is_valid_mobile(mobile):
-        return jsonify({"error": "Please enter a valid 10-digit Indian mobile number."}), 400
-
-    record = {
-        "name": name, "mobile": mobile, "purpose": purpose,
-        "status": "pending", "ip": ip,
-        "created_at": datetime.now(timezone.utc),
-    }
-    if db is not None:
-        db.cibil_enquiries.insert_one(record)
-
-    # Fire-and-forget email notification (Sync if serverless, Thread if local/VM)
-    if IS_VERCEL:
-        send_cibil_email(record)
-    else:
-        threading.Thread(target=send_cibil_email, args=(record,), daemon=True).start()
-
-    return jsonify({
-        "success": True,
-        "message": "Received! Our team will call you within 24 hours.",
-    })
 
 
 @app.route("/api/admin/leads")
@@ -621,36 +558,7 @@ _ADMIN_DASHBOARD_HTML = """
             {% endif %}
         </div>
 
-        <div class="card">
-            <h2>🔍 CIBIL Eligibility Enquiries</h2>
-            {% if cibil %}
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>Purpose</th>
-                    <th>Status</th>
-                </tr>
-                {% for c in cibil %}
-                <tr>
-                    <td style="white-space:nowrap;font-size:13px;color:#666;">{{ c.created_at.strftime('%d %b, %H:%M') if c.created_at else '—' }}</td>
-                    <td style="font-weight:bold;">{{ c.name }}</td>
-                    <td><a href="tel:{{ c.mobile }}">{{ c.mobile }}</a></td>
-                    <td>{{ c.purpose or '—' }}</td>
-                    <td>
-                        <select onchange="updateStatus('cibil', '{{ c._id }}', this.value)">
-                            <option value="pending" {% if c.status == 'pending' %}selected{% endif %}>Pending</option>
-                            <option value="contacted" {% if c.status == 'contacted' %}selected{% endif %}>Contacted</option>
-                        </select>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-            {% else %}
-            <div class="empty">No CIBIL enquiries found yet.</div>
-            {% endif %}
-        </div>
+
 
     </div>
 
@@ -705,12 +613,9 @@ def admin_dashboard():
         
     # Fetch latest 50 leads
     leads = list(db.leads.find().sort("created_at", -1).limit(50))
-    # Fetch latest 50 CIBIL enquiries
-    cibil = list(db.cibil_enquiries.find().sort("created_at", -1).limit(50))
-    
     # Render using Jinja2 Template directly from string
     tmpl = Template(_ADMIN_DASHBOARD_HTML)
-    return tmpl.render(leads=leads, cibil=cibil)
+    return tmpl.render(leads=leads)
 
 
 @app.route("/api/admin/status", methods=["PATCH"])
@@ -724,7 +629,7 @@ def admin_update_status():
     record_id = body.get("id")
     status = body.get("status")
     
-    if collection not in ["leads", "cibil"]:
+    if collection != "leads":
         return jsonify({"error": "Invalid collection"}), 400
         
     from bson.objectid import ObjectId
@@ -733,10 +638,7 @@ def admin_update_status():
     except:
         return jsonify({"error": "Invalid ID"}), 400
         
-    if collection == "leads":
-        db.leads.update_one({"_id": oid}, {"$set": {"status": status}})
-    else: # (These are no longer needed as we have a full UI dashboard now)
-        db.cibil_enquiries.update_one({"_id": oid}, {"$set": {"status": status}})
+    db.leads.update_one({"_id": oid}, {"$set": {"status": status}})
         
     return jsonify({"success": True})
 
@@ -757,6 +659,5 @@ if __name__ == "__main__":
     log.info(f"\n🚀  Smritikana Flask Backend → http://0.0.0.0:{PORT}")
     log.info("     GET  /api/stocks")
     log.info("     POST /api/leads")
-    log.info("     POST /api/cibil")
     log.info("     GET  /api/health\n")
     app.run(host="0.0.0.0", port=PORT, debug=False)

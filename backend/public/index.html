@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -2009,7 +2009,6 @@
         <li><a href="#tools">Tools ▾</a>
           <div class="dropdown">
             <a href="#tools">EMI Calculator</a>
-            <a href="#tools">CIBIL Eligibility Checker</a>
           </div>
         </li>
         <li><a href="#compliance">Compliance</a></li>
@@ -2042,7 +2041,6 @@
         onclick="showTab('s8',null);toggleDrawer()">Section 8 / NGO</a>
       <div class="drawer-section">Other</div>
       <a href="#tools" onclick="toggleDrawer()">EMI Calculator</a>
-      <a href="#tools" onclick="toggleDrawer()">CIBIL Check</a>
       <a href="#compliance" onclick="toggleDrawer()">Compliance</a>
       <a href="#legal" onclick="toggleDrawer()">Legal</a>
       <a href="#contact" onclick="toggleDrawer()" class="btn-primary" style="text-align:center;margin-top:18px">🎯 Free
@@ -2098,7 +2096,7 @@
       <a href="#tools" class="svc-card">
         <div class="svc-icon">📈</div>
         <h3>Live Markets &amp; Tools</h3>
-        <p>Real-time NSE/BSE stocks, NIFTY, SENSEX, Crypto ticker — plus EMI Calculator &amp; CIBIL Checker.</p><span
+        <p>Real-time NSE/BSE stocks, NIFTY, SENSEX, Crypto ticker — plus EMI Calculator.</p><span
           class="svc-arrow">→</span>
       </a>
       <a href="#compliance" class="svc-card">
@@ -3104,25 +3102,7 @@
           </div>
         </div>
       </div>
-      <div class="tool-card">
-        <h3>🔍 CIBIL Eligibility Check</h3>
-        <p>A consultant will assess your credit eligibility and call you with a full loan guidance report.</p>
-        <div class="form-group"><label>Full Name</label><input type="text" id="cName" placeholder="Your full name">
-        </div>
-        <div class="form-group"><label>Mobile Number</label><input type="tel" id="cMobile"
-            placeholder="+91 XXXXX XXXXX"></div>
-        <div class="form-group"><label>Loan Purpose</label>
-          <select id="cPurpose">
-            <option>Business Loan</option>
-            <option>Working Capital</option>
-            <option>Equipment Finance</option>
-            <option>MSME Loan</option>
-            <option>Startup Funding</option>
-          </select>
-        </div>
-        <button class="btn-primary form-submit" onclick="submitCibil(event)">Check Eligibility</button>
-        <div id="cMsg" class="form-msg"></div>
-      </div>
+
     </div>
   </section>
 
@@ -3428,7 +3408,6 @@
         <ul>
           <li><a href="#contact">Free Consultation</a></li>
           <li><a href="#tools">EMI Calculator</a></li>
-          <li><a href="#tools">CIBIL Check</a></li>
           <li><a href="#" onclick="openModal('privacy');return false;">Privacy Policy</a></li>
           <li><a href="#" onclick="openModal('terms');return false;">Refund Policy</a></li>
           <li><a href="#" onclick="openModal('terms');return false;">Terms &amp; Conditions</a></li>
@@ -3698,26 +3677,7 @@
       btn.disabled = false; btn.textContent = 'Request Free Consultation →';
     }
 
-    // ── CIBIL FORM ─────────────────────────────────────────────
-    async function submitCibil(e) {
-      const btn = e.target;
-      const name = document.getElementById('cName').value.trim();
-      const mobile = document.getElementById('cMobile').value.trim();
-      const purpose = document.getElementById('cPurpose').value;
-      if (!name || !mobile) { showMsg('cMsg', 'err', 'Name and mobile are required.'); return; }
-      btn.disabled = true; btn.textContent = 'Submitting…';
-      try {
-        const j = await postJSON('/api/cibil', { name, mobile, purpose });
-        if (j.success) {
-          showMsg('cMsg', 'ok', j.message || 'Received! Our team will call you within 24 hours.');
-          document.getElementById('cName').value = '';
-          document.getElementById('cMobile').value = '';
-        } else showMsg('cMsg', 'err', j.error || 'Something went wrong.');
-      } catch {
-        showMsg('cMsg', 'err', 'Unable to reach server. Please call us directly.');
-      }
-      btn.disabled = false; btn.textContent = 'Check Eligibility';
-    }
+
 
     // ── REGISTRATION TABS ──────────────────────────────────────
     function showTab(id, btn) {

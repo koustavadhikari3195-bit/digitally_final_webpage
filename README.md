@@ -105,10 +105,8 @@ You can deploy directly through the Vercel Dashboard (connecting your GitHub rep
 | GET | `/api/stocks/<category>` | Stocks by category (indices/india/crypto) | Public |
 | GET | `/api/stocks/refresh` | Force-refresh stock cache | Public |
 | POST | `/api/leads` | Submit consultation request | Public |
-| POST | `/api/cibil` | Submit CIBIL eligibility check | Public |
-| GET | `/api/admin/leads` | List all leads (paginated) | Admin |
+| GET | `/api/admin/leads` | List consultation leads | Admin |
 | PATCH | `/api/admin/leads/<id>` | Update lead status | Admin |
-| GET | `/api/admin/cibil` | List CIBIL enquiries | Admin |
 
 ### Admin Authentication
 All admin endpoints require the `x-admin-secret` header:
