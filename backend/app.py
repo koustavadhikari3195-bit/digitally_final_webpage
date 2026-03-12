@@ -39,7 +39,7 @@ import yfinance as yf
 from flask import Flask, jsonify, request, send_from_directory, abort
 from flask_cors import CORS
 from pymongo import MongoClient
-from pymongo.errors import ConnectionFailure
+from pymongo.errors import ConnectionFailure, ConfigurationError, InvalidURI
 from bson import ObjectId
 from dotenv import load_dotenv
 
@@ -68,7 +68,7 @@ try:
     client.admin.command("ping")
     db = client.get_default_database() if "/" in MONGO_URI and MONGO_URI.count("/") >= 3 else client["smritikana"]
     log.info("✅  MongoDB connected")
-except ConnectionFailure as e:
+except (ConnectionFailure, ConfigurationError, InvalidURI) as e:
     log.warning(f"⚠️  MongoDB unavailable — leads will NOT be saved: {e}")
 
 # ─── STOCK SYMBOLS ───────────────────────────────────────────

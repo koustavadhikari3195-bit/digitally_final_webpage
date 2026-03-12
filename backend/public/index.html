@@ -1801,6 +1801,17 @@
         grid-template-columns: 1fr
       }
 
+      .calc-result {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .calc-result>div {
+        text-align: left !important;
+      }
+
+
       section {
         padding: 52px 22px
       }
@@ -1981,8 +1992,10 @@
           <div class="dropdown">
             <a href="#registration" onclick="showTab('mf',null)">Microfinance Company</a>
             <a href="#registration" onclick="showTab('s8',null)">Section 8 (NGO)</a>
-            <a href="#registration" onclick="showTab('nbfc',null)">NBFC Registration</a>
-            <a href="#registration" onclick="showTab('mfs',null)">Microfinance Software</a>
+            <a href="#registration" onclick="showTab('nbfc-mfi',null)">NBFC-MFI Registration</a>
+            <a href="#registration" onclick="showTab('nbfc-p2p',null)">NBFC-P2P Registration</a>
+            <a href="#registration" onclick="showTab('nbfc',null)">NBFC (Core) Registration</a> <a href="#registration"
+              onclick="showTab('mfs',null)">Microfinance Software</a>
             <hr style="opacity:0.1;margin:5px 0;">
             <a href="#registration" onclick="showTab('pvt',null)">Private Limited</a>
             <a href="#registration" onclick="showTab('llp',null)">LLP Registration</a>
@@ -2023,8 +2036,10 @@
       <a href="#registration" onclick="showTab('opc',null);toggleDrawer()">OPC</a>
       <a href="#registration" onclick="showTab('nidhi',null);toggleDrawer()">Nidhi Company</a>
       <a href="#registration" onclick="showTab('mf',null);toggleDrawer()">Microfinance</a>
-      <a href="#registration" onclick="showTab('nbfc',null);toggleDrawer()">NBFC</a>
-      <a href="#registration" onclick="showTab('s8',null);toggleDrawer()">Section 8 / NGO</a>
+      <a href="#registration" onclick="showTab('nbfc-mfi',null);toggleDrawer()">NBFC-MFI</a>
+      <a href="#registration" onclick="showTab('nbfc-p2p',null);toggleDrawer()">NBFC-P2P</a>
+      <a href="#registration" onclick="showTab('nbfc',null);toggleDrawer()">NBFC (Core)</a> <a href="#registration"
+        onclick="showTab('s8',null);toggleDrawer()">Section 8 / NGO</a>
       <div class="drawer-section">Other</div>
       <a href="#tools" onclick="toggleDrawer()">EMI Calculator</a>
       <a href="#tools" onclick="toggleDrawer()">CIBIL Check</a>
@@ -2109,8 +2124,10 @@
     <div class="reg-tabs">
       <button class="reg-tab active" onclick="showTab('mf',this)">Microfinance</button>
       <button class="reg-tab" onclick="showTab('s8',this)">Section 8</button>
-      <button class="reg-tab" onclick="showTab('nbfc',this)">NBFC</button>
-      <button class="reg-tab" onclick="showTab('mfs',this)">MFI Software</button>
+      <button class="reg-tab" onclick="showTab('nbfc-mfi',this)">NBFC-MFI</button>
+      <button class="reg-tab" onclick="showTab('nbfc-p2p',this)">NBFC-P2P</button>
+      <button class="reg-tab" onclick="showTab('nbfc',this)">NBFC (Core)</button> <button class="reg-tab"
+        onclick="showTab('mfs',this)">MFI Software</button>
       <button class="reg-tab" onclick="showTab('pvt',this)">Private Ltd</button>
       <button class="reg-tab" onclick="showTab('llp',this)">LLP</button>
       <button class="reg-tab" onclick="showTab('nidhi',this)">Nidhi Co.</button>
@@ -2451,6 +2468,178 @@
         </div>
       </div>
       <!-- ── Microfinance (Old - Replaced Above) ── -->
+      <!-- ── NBFC-MFI ── -->
+      <div id="tab-nbfc-mfi" class="reg-panel">
+        <div class="reg-content">
+          <h3>NBFC-MFI Registration</h3>
+          <p>NBFC-MFI means Non-Banking Financial Company – Microfinance Institution. It is regulated by the Reserve
+            Bank of India (RBI).</p>
+          <div class="keynote">
+            <div class="keynote-title">Key NBFC-MFI Rules</div>
+            <ul>
+              <li>Loans mainly for low-income households</li>
+              <li>Maximum loan limits defined by RBI</li>
+              <li>Interest rate and borrower income rules must be followed</li>
+            </ul>
+          </div>
+          <div class="keynote" style="background:rgba(184, 151, 42, 0.05); padding:10px 18px;">
+            <strong style="color:var(--gold-l); font-size:12.5px;">⏱ Time Required:</strong> <span
+              style="font-size:12.5px; color:var(--muted);">Usually 4–6 months.</span>
+          </div>
+          <div class="doc-list">
+            <div class="doc-item">Certificate of Incorporation</div>
+            <div class="doc-item">MOA &amp; AOA (mentions microfinance)</div>
+            <div class="doc-item">Directors' KYC &amp; Profiles</div>
+            <div class="doc-item">Board Resolution for NBFC-MFI</div>
+            <div class="doc-item">5-year business plan</div>
+            <div class="doc-item">Banker's &amp; No-lien Certificates</div>
+            <div class="doc-item">CA Certificate for Net Owned Fund</div>
+          </div><br>
+          <a href="#contact" class="btn-primary">Register Now</a>
+        </div>
+        <div>
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Company Incorporation</h4>
+              <p>First register a Private Limited / Public Limited Company under the Companies Act 2013.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Minimum Capital Requirement</h4>
+              <p>Minimum Net Owned Fund (NOF) = ₹7 crore. For companies in North-East states = ₹5 crore.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Open Bank Account</h4>
+              <p>Deposit the required capital and obtain Banker’s, No-lien, and CA Net worth certificates.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>Prepare Documents</h4>
+              <p>Compile Incorporation Certificate, MOA/AOA, KPIs, Business Plan, and Financials.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <h4>Apply to RBI</h4>
+              <p>Submit the online application through the RBI PRAVAAH Portal.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-body">
+              <h4>Submit Physical Documents</h4>
+              <p>Send the hard copies of all documents to the RBI regional office.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">7</div>
+            <div class="step-body">
+              <h4>RBI Review</h4>
+              <p>RBI checks promoters’ background, financial strength, business plan, and compliance.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">8</div>
+            <div class="step-body">
+              <h4>Certificate of Registration</h4>
+              <p>After approval, RBI issues the NBFC-MFI Certificate of Registration (CoR) to lend.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ── NBFC-P2P ── -->
+      <div id="tab-nbfc-p2p" class="reg-panel">
+        <div class="reg-content">
+          <h3>NBFC-P2P Registration</h3>
+          <p>NBFC-P2P is a Peer-to-Peer Lending Platform that connects borrowers & lenders directly. It does not lend
+            its own money, acting strictly as a facilitator regulated by the RBI.</p>
+          <div class="keynote">
+            <div class="keynote-title">Important NBFC-P2P Rules</div>
+            <ul>
+              <li>Max lending: ₹50 lakh per lender (across platforms)</li>
+              <li>Max borrowing: ₹10 lakh per borrower</li>
+              <li>Platform cannot lend its own money</li>
+              <li>All transactions must be digital and transparent</li>
+            </ul>
+          </div>
+          <div class="keynote"
+            style="background:rgba(184, 151, 42, 0.05); border-color:rgba(184, 151, 42, 0.2); margin-bottom:15px;">
+            <div class="keynote-title" style="color:var(--gold-l);">💳 Escrow Account System</div>
+            <p style="font-size:12.5px; color:var(--muted); margin-top:5px; line-height:1.6;">Money never moves directly
+              through the NBFC-P2P company. Instead, funds are securely routed through bank-managed escrow
+              accounts.<br><br>
+              <strong>Lending:</strong> Lender → Escrow → Borrower<br>
+              <strong>Repayment:</strong> Borrower → Escrow → Lender
+            </p>
+          </div>
+          <div class="keynote" style="padding:10px 18px;">
+            <strong style="color:var(--gold-l); font-size:12.5px;">⏱ Time Required:</strong> <span
+              style="font-size:12.5px; color:var(--muted);">Usually 4–6 months.</span>
+          </div>
+          <br>
+          <a href="#contact" class="btn-primary">Register Now</a>
+        </div>
+        <div>
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Company Incorporation</h4>
+              <p>First register a Private Limited Company under the Companies Act 2013.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Minimum Capital Requirement</h4>
+              <p>Minimum Net Owned Fund (NOF) = ₹2 crore. Must be deposited in the bank account.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Technology Platform Setup</h4>
+              <p>Develop P2P lending website/app, secure databases, and verification systems.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h4>Prepare Document Archive</h4>
+              <p>Compile COI, MOA/AOA, CA Net worth certificates, Business & Tech plans.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <h4>Apply to RBI</h4>
+              <p>Submit the application via the RBI PRAVAAH Portal and upload all required documents.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-body">
+              <h4>RBI Verification</h4>
+              <p>RBI checks promoter background, financial strength, and technology platform security.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">7</div>
+            <div class="step-body">
+              <h4>Certificate of Registration</h4>
+              <p>If approved, RBI issues the NBFC-P2P CoR, allowing platform operations to begin.</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- ── NBFC ── -->
       <div id="tab-nbfc" class="reg-panel">
         <div class="reg-content">
@@ -3050,6 +3239,26 @@
           <li>Patent Registration</li>
           <li>Barcode Registration</li>
         </ul>
+      </div>
+      <div class="legal-card"
+        style="grid-column: span 1; position: relative; overflow: hidden; border-color: rgba(184, 151, 42, 0.4); background: linear-gradient(135deg, var(--dark3), rgba(184, 151, 42, 0.05));">
+        <div
+          style="position: absolute; top: 15px; right: -30px; background: var(--gold); color: var(--dark); font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 4px 35px; transform: rotate(45deg);">
+          TOP SERVICE</div>
+        <div class="lc-ico" style="font-size:32px; margin-bottom:10px;">®️</div>
+        <h4 style="font-size: 18px; color: var(--gold-l); margin-bottom: 5px;">Trademark Registration</h4>
+        <p style="font-size: 12.5px; color: var(--muted); margin-bottom: 15px; line-height: 1.6;">Protect your brand
+          identity from infringement. We offer comprehensive trademark searching, filing, and objection handling across
+          India.</p>
+        <div style="display:flex; flex-wrap:wrap; gap: 10px; margin-bottom: 20px;">
+          <span
+            style="background: rgba(184, 151, 42, 0.1); color: var(--gold); padding: 4px 8px; border-radius: 4px; font-size: 11px;">#1
+            IPR Firm</span>
+          <span
+            style="background: rgba(184, 151, 42, 0.1); color: var(--gold); padding: 4px 8px; border-radius: 4px; font-size: 11px;">Fast
+            Filing</span>
+        </div>
+        <a href="#contact" class="btn-outline" style="padding: 8px 20px; font-size: 11px;">Start Registration</a>
       </div>
     </div>
   </section>
